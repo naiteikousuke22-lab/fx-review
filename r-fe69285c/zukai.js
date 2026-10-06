@@ -63,7 +63,12 @@
         '<div class="zk-bar loss"><span>1円動くと</span><i style="width:' + r.plW + '%"></i><em>±' + r.pl + '</em></div>' +
         (r.note ? '<p class="zk-fine" style="margin:4px 0 0">' + r.note + '</p>' : "") + '</div>';
     }).join("") + '</div>' +
-    '<p class="zk-fine" style="text-align:center">※米ドル/円＝150円・レバレッジ25倍で計算した目安。バーの長さはイメージです。<br>1通貨なら、1円動いても損益は±1円。<b>はじめての練習にちょうどいい大きさ</b>です。</p>' +
+    '<h3 class="zk-h3">取引する数量ごとの目安（米ドル/円）</h3>' +
+    '<div class="zk-tbl-wrap"><table class="zk-qty"><thead><tr><th>取引する数量</th><th>必要なお金</th><th>1円動いたときの損益</th></tr></thead><tbody>' +
+    [[1, "6円", "±1円"], [10, "60円", "±10円"], [100, "600円", "±100円"], [1000, "6,000円", "±1,000円"], [10000, "6万円", "±1万円"]].map(function (r) {
+      return '<tr' + (r[0] <= 100 ? ' class="sbi"' : "") + "><th>" + r[0].toLocaleString() + "通貨</th><td>約" + r[1] + "</td><td>" + r[2] + "</td></tr>";
+    }).join("") + '</tbody></table></div>' +
+    '<p class="zk-fine" style="text-align:center"><span class="zk-sbi-key"></span>の数量で取引できるのは、掲載6社では<b>SBI FXトレードだけ</b>（1通貨単位）です。<br>※米ドル/円＝150円・レバレッジ25倍で計算した目安。バーの長さはイメージです。</p>' +
     '</section>';
 
   /* C. 初心者が見る5項目の◎○△ */
@@ -101,6 +106,69 @@
     '<div class="zk-first"><b>最初の1回目のおすすめ</b><strong><em>米ドル/円</em> × <em>1通貨</em></strong><span>証拠金は約6円。1円動いても損益は±1円です。</span></div>' +
     "</section>";
 
+  /* E. 目的別ランキング（タブ切り替え）：会社データの数値で並べる */
+  var spread = function (k) { var s = C[k].spec, m = /([\d.]+)銭/.exec(s.usdNote || ""); return m && +m[1] < +s.usd ? { v: +m[1], note: "LIGHTペア" } : { v: +s.usd, note: "" }; };
+  var unitN = function (k) { var u = C[k].spec.unit; return /^1通貨/.test(u) ? 1 : /^1,000/.test(u) ? 1000 : 10000; };
+  var byRank = function (k) { return A.ranking.indexOf(k); };
+  var tabs = [
+    { id: "small", label: "少額で始めたい", head: ["最小単位", "必要なお金"], note: "米ドル/円＝150円・レバレッジ25倍で計算した目安。",
+      keys: keys.slice().sort(function (a, b) { return unitN(a) - unitN(b) || byRank(a) - byRank(b); }),
+      cells: function (k) { return ["<b>" + C[k].spec.unit.replace(/（.*）/, "") + "</b>", C[k].spec.fund.replace(/（.*）/, "")]; } },
+    { id: "cost", label: "コストを抑えたい", head: ["米ドル/円", "取引時間の目安"], note: "スプレッドは原則固定（例外あり）。対象の時間帯は各社で異なります。",
+      keys: keys.slice().sort(function (a, b) { return spread(a).v - spread(b).v || byRank(a) - byRank(b); }),
+      cells: function (k) { var s = spread(k); return ["<b>" + s.v + "銭</b>" + (s.note ? "<small>" + s.note + "</small>" : ""), C[k].spec.hours]; } },
+    { id: "swap", label: "スワップを貯めたい", head: ["メキシコペソ/円", "トルコリラ/円"], note: "10万通貨・1日あたりの買いの参考値（各社公表値、2026年5〜9月時点）。スワップは日々変動し、支払いに転じることもあります。",
+      keys: keys.filter(function (k) { return C[k].swap && C[k].swap.mxn; }).sort(function (a, b) { return C[b].swap.mxn - C[a].swap.mxn; }),
+      cells: function (k) { return ["<b>" + C[k].swap.mxn + "円</b>", C[k].swap.try + "円"]; } }
+  ];
+  var medal = ["#d4a017", "#9aa6b2", "#c07a45"];
+  var purpose =
+    '<section class="sec zk" id="zk-purpose"><h2 class="zk-h"><small>目的で選ぶ</small>目的別FX口座ランキング</h2>' +
+    '<p class="zk-lead">あなたが一番大事にしたいことを選んでください。<br>数字の良い順に並びます。</p>' +
+    '<div class="zk-tabs" role="tablist">' + tabs.map(function (t, i) { return '<button type="button" role="tab" data-zk-tab="' + t.id + '" aria-selected="' + (i === 0) + '">' + t.label + "</button>"; }).join("") + "</div>" +
+    tabs.map(function (t, i) {
+      return '<div class="zk-panel" data-zk-panel="' + t.id + '"' + (i ? " hidden" : "") + '><table class="zk-rk"><thead><tr><th>順位</th><th>FX会社</th><th>' + t.head[0] + "</th><th>" + t.head[1] + "</th><th></th></tr></thead><tbody>" +
+        t.keys.map(function (k, j) {
+          var c = t.cells(k);
+          return "<tr" + (k === "sbifxt" ? ' class="best"' : "") + '><td><span class="zk-medal" style="background:' + (medal[j] || "#d9e0ea") + ";color:" + (j < 3 ? "#fff" : "#5f6b7a") + '">' + (j + 1) + '</span></td><th><img src="' + logo(k) + '" alt="">' + name(k) + "</th><td>" + c[0] + "</td><td>" + c[1] + '</td><td><a class="zk-mini" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="zk_' + t.id + '">公式<br>サイト</a></td></tr>';
+        }).join("") + '</tbody></table><p class="zk-fine">' + t.note + (t.id === "swap" ? "掲載6社のうち、スワップの参考値を確認できた会社だけを並べています。" : "") + "</p></div>";
+    }).join("") + "</section>";
+
+  /* H. メリットと注意点 */
+  var good = [["💰", "少ないお金で始められる", "1通貨なら証拠金は約6円。お小づかい程度から試せます。"], ["🕒", "平日はほぼ24時間取引できる", "仕事のあとや夜でも、スマホで注文できます。"], ["↕️", "円安でも円高でも利益を狙える", "「売り」から入れるので、下がる場面もチャンスになります。"], ["🆓", "口座開設・取引手数料が無料", "掲載6社とも、口座開設と維持にお金はかかりません。"]];
+  var care = [["⚖️", "レバレッジで損失も大きくなる", "最大25倍。少ないお金で大きく動かせる分、損失も大きくなります。"], ["⚡", "為替は急に動くことがある", "経済指標の発表や要人の発言で、短い時間に大きく動きます。"], ["🔁", "スワップが支払いになることも", "売りで持つと、毎日スワップを支払う側になります。"], ["🛑", "ロスカットで自動決済される", "証拠金が一定より減ると、損失が確定する形で自動で決済されます。"]];
+  var li = function (a) { return a.map(function (x) { return '<li><span class="zk-ic" aria-hidden="true">' + x[0] + "</span><div><b>" + x[1] + "</b><p>" + x[2] + "</p></div></li>"; }).join(""); };
+  var merit =
+    '<section class="sec zk" id="zk-merit"><h2 class="zk-h"><small>始める前に知っておく</small>FXのメリットと注意点</h2>' +
+    '<div class="zk-mc"><div class="zk-mc-box good"><p class="zk-mc-t">メリット</p><ul>' + li(good) + '</ul></div>' +
+    '<div class="zk-mc-box care"><p class="zk-mc-t">注意点</p><ul>' + li(care) + "</ul></div></div>" +
+    '<div class="zk-tip"><b>注意点への対策はシンプル</b><span><mark>1通貨・低いレバレッジ</mark>で始めれば、1円動いても損益は±1円。<br>仕組みに慣れてから、少しずつ数量を増やしましょう。</span></div>' +
+    "</section>";
+
+  /* F. ほかの投資との違い */
+  var vs = [
+    ["始められる金額", "数円〜<small>（1通貨の会社）</small>", "1ドル〜など<small>（銀行による）</small>", "数百円〜<small>（取引所による）</small>"],
+    ["取引できる時間", "平日ほぼ24時間", "銀行の取扱時間内<small>（ネット銀行は長め）</small>", "24時間365日"],
+    ["主なコスト", "スプレッドのみ<small>（米ドル/円0.2銭前後）</small>", "為替手数料<small>（銀行により数銭〜1円程度）</small>", "スプレッド・手数料<small>（銘柄で差が大きい）</small>"],
+    ["レバレッジ", "最大25倍", "なし", "最大2倍"],
+    ["下がる場面で利益", "◎ 売りから入れる", "× 買いのみ", "○ レバレッジ取引なら可"],
+    ["元本の保証", "なし", "なし<small>（外貨部分は預金保険の対象外）</small>", "なし"]
+  ];
+  var diff =
+    '<section class="sec zk" id="zk-diff"><h2 class="zk-h"><small>よく比べられる</small>FXと外貨預金・暗号資産の違い</h2>' +
+    '<p class="zk-lead">「外貨を持つ」方法はほかにもあります。<br>違いを表にまとめました。</p>' +
+    '<div class="zk-tbl-wrap"><table class="zk-vs"><thead><tr><th></th><th class="fx">FX</th><th>外貨預金</th><th>暗号資産</th></tr></thead><tbody>' +
+    vs.map(function (r) { return "<tr><th>" + r[0] + '</th><td class="fx">' + r[1] + "</td><td>" + r[2] + "</td><td>" + r[3] + "</td></tr>"; }).join("") +
+    '</tbody></table></div><div class="zk-first" style="margin-top:14px"><b>少額で、コストを抑えて外貨にふれたいなら</b><strong><em>FX</em> がいちばん手軽</strong><span>ただし元本は保証されません。少額から試しましょう。</span></div>' +
+    "</section>";
+
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-zk-tab]"); if (!b) return;
+    var box = b.closest("#zk-purpose");
+    box.querySelectorAll("[data-zk-tab]").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
+    box.querySelectorAll("[data-zk-panel]").forEach(function (p) { p.hidden = p.getAttribute("data-zk-panel") !== b.getAttribute("data-zk-tab"); });
+  });
+
   var put = function (afterSel, html) {
     var el = document.querySelector(afterSel);
     if (el && !document.getElementById(html.match(/id="([^"]+)"/)[1])) el.insertAdjacentHTML("afterend", html);
@@ -110,7 +178,10 @@
     if (!document.getElementById("worry")) return false;
     put("#worry", chart);
     put("#top3", money);
+    put("#zk-money", purpose);
+    put("#future2", merit);
     put("#terms", pair);
+    put("#zk-pair", diff);
     put("#road", score);
     return true;
   };
