@@ -134,3 +134,12 @@
 .zk-qty tr.sbi>*{background:var(--zk-red-soft)}
 .zk-qty tr.sbi th{color:var(--zk-red)}
 .zk-sbi-key{display:inline-block;width:14px;height:10px;border-radius:3px;background:var(--zk-red-soft);border:1px solid var(--zk-red);vertical-align:-1px;margin-right:3px}
+
+/* 各社バナー：全社を同じ4:3にそろえる（2026-10-06）。元画像 img/bn3 は形がバラバラ → img/bn4 に切り直し済み */
+.r2 .r2-banner img,.r2 .r2-pick-body figure.r2-banner img,.r2 .r2-sub-card figure.r2-banner img,
+.banner img,.r2 figure.banner img,.r2 .lc-banner,img.lc-banner{
+  aspect-ratio:4/3 !important;width:100% !important;height:auto !important;max-height:none !important;
+  object-fit:cover !important;object-position:center !important;background:#fff}
+.r2 .r2-pick-body{grid-template-columns:1fr !important}
+.r2 .r2-pick-body figure.r2-banner{max-width:420px;margin:0 auto;width:100%}
+.r2 .lc-banner,img.lc-banner{max-width:420px;margin-left:auto !important;margin-right:auto !important}
