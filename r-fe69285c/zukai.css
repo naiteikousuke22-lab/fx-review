@@ -1,0 +1,84 @@
+/* 図解セクション（2026-10-06 追加）：初心者が「これがいい」と一目でわかるための図 */
+.zk{--zk-navy:#123a6b;--zk-navy-soft:#e8eff8;--zk-red:#d93b3b;--zk-red-soft:#fdeceb;--zk-green:#1f9d55;--zk-yes:#e8553d;--zk-no:#3a6fd8;--zk-ink:#1d2330;--zk-sub:#5f6b7a;--zk-line:#d9e0ea;--zk-gold:#f2b705;
+  color:var(--zk-ink);font-family:"BIZ UDPGothic","Hiragino Sans",sans-serif}
+.zk *{box-sizing:border-box}
+.zk .zk-h{font-family:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;font-weight:900;color:var(--zk-navy);font-size:22px;line-height:1.4;text-align:center;margin:0 0 6px}
+.zk .zk-h small{display:block;font-size:13px;color:var(--zk-red);font-weight:700;letter-spacing:.04em;margin-bottom:2px}
+.zk .zk-lead{word-break:keep-all;overflow-wrap:anywhere;text-align:center;font-size:14px;color:var(--zk-sub);margin:0 0 18px;line-height:1.7}
+.zk .zk-fine{font-size:11px;color:var(--zk-sub);line-height:1.6;margin:10px 0 0}
+.zk mark{background:linear-gradient(transparent 60%,#ffe58a 60%);color:inherit;padding:0 1px}
+
+/* ── A. YES/NOチャート ── */
+.zk-tree{max-width:520px;margin:0 auto}
+.zk-q{background:var(--zk-navy);color:#fff;border-radius:12px;padding:12px 10px;text-align:center;font-weight:700;font-size:15px;line-height:1.45;position:relative}
+.zk-q .zk-qn{display:inline-block;background:#fff;color:var(--zk-navy);border-radius:999px;font-size:11px;padding:1px 8px;margin-bottom:4px}
+.zk-split{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0}
+.zk-branch{display:flex;flex-direction:column;align-items:stretch}
+.zk-arrow{display:flex;flex-direction:column;align-items:center;margin:4px 0}
+.zk-arrow::before{content:"";width:2px;height:12px;background:var(--zk-line)}
+.zk-arrow::after{content:"";border:7px solid transparent;border-top:9px solid var(--zk-line);border-bottom:0}
+.zk-yn{font-weight:900;font-size:13px;color:#fff;border-radius:999px;padding:2px 12px;margin:2px 0}
+.zk-yes{background:var(--zk-yes)}.zk-no{background:var(--zk-no)}
+.zk-branch .zk-q{font-size:13.5px;padding:10px 8px;background:#2c5a94}
+.zk-res{display:block;text-decoration:none;color:var(--zk-ink);background:#fff;border:2px solid var(--zk-line);border-radius:12px;padding:8px 6px 9px;text-align:center;min-height:118px}
+.zk-res img{height:26px;max-width:100%;object-fit:contain;display:block;margin:2px auto 5px}
+.zk-res b{display:block;font-size:12.5px;word-break:keep-all;line-height:1.35}
+.zk-res span{display:block;font-size:11.5px;color:var(--zk-sub);line-height:1.45;margin-top:3px}
+.zk-res.best{border-color:var(--zk-red);background:var(--zk-red-soft);box-shadow:0 4px 14px -6px rgba(217,59,59,.45);position:relative}
+.zk-res.best::before{content:"初心者の本命";position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--zk-red);color:#fff;font-size:10.5px;font-weight:800;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.zk-res2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.zk-res2 .zk-col{display:flex;flex-direction:column;align-items:center}
+.zk-res2 .zk-res{width:100%}
+.zk-concl{margin:22px auto 0;max-width:520px;border:3px solid var(--zk-red);border-radius:16px;padding:16px 14px 14px;background:#fff;text-align:center;position:relative}
+.zk-concl .zk-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--zk-red);color:#fff;font-weight:900;font-size:13px;border-radius:999px;padding:3px 14px;white-space:nowrap}
+.zk-concl p{margin:4px 0 10px;font-size:15px;font-weight:700;line-height:1.6}
+
+/* ── B. 必要なお金・損益の図 ── */
+.zk-money{max-width:560px;margin:0 auto;display:grid;gap:12px}
+.zk-mrow{background:#fff;border:1px solid var(--zk-line);border-radius:12px;padding:12px}
+.zk-mrow.best{border:2px solid var(--zk-red);background:var(--zk-red-soft)}
+.zk-mhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.zk-mhead img{height:20px;object-fit:contain}
+.zk-mhead b{font-size:14px}
+.zk-mhead .zk-unit{margin-left:auto;font-size:12px;font-weight:700;background:var(--zk-navy-soft);color:var(--zk-navy);border-radius:6px;padding:2px 8px}
+.zk-bar{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:8px;margin:5px 0;font-size:12px;color:var(--zk-sub)}
+.zk-bar i{display:block;height:14px;border-radius:7px;background:var(--zk-navy);min-width:6px}
+.zk-bar.loss i{background:#f0a23b}
+.zk-bar em{font-style:normal;font-weight:900;font-size:15px;color:var(--zk-ink);white-space:nowrap}
+.zk-mrow.best .zk-bar i{background:var(--zk-red)}
+.zk-key{display:flex;gap:14px;justify-content:center;font-size:12px;color:var(--zk-sub);margin:-6px 0 12px}
+.zk-key span::before{content:"";display:inline-block;width:12px;height:8px;border-radius:4px;margin-right:5px;background:var(--zk-navy)}
+.zk-key span.l::before{background:#f0a23b}
+
+/* ── C. ◎○△表 ── */
+.zk-tbl-wrap{max-width:600px;margin:0 auto;overflow-x:auto}
+.zk-tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;background:#fff;border:1px solid var(--zk-line);border-radius:12px;overflow:hidden}
+.zk-tbl th,.zk-tbl td{padding:8px 3px;text-align:center;border-bottom:1px solid var(--zk-line)}
+.zk-tbl thead th{white-space:nowrap;background:var(--zk-navy);color:#fff;font-weight:700;font-size:11.5px;line-height:1.3}
+.zk-tbl thead th small{display:block;font-weight:400;opacity:.85;font-size:10px}
+.zk-tbl tbody th{text-align:left;padding-left:8px;font-weight:700;font-size:12px;white-space:nowrap}
+.zk-tbl tbody th img{height:16px;display:block;margin-bottom:2px;object-fit:contain;max-width:84px}
+.zk-tbl tr:last-child>*{border-bottom:0}
+.zk-tbl tr.best>*{background:var(--zk-red-soft)}
+.zk-tbl tr.best th{box-shadow:inset 4px 0 0 var(--zk-red)}
+.zk-s{font-size:19px;font-weight:900;line-height:1}
+.zk-s.s5{color:var(--zk-red)}.zk-s.s4{color:#e3862b}.zk-s.s3{color:#7a8798}.zk-s.s2{color:#b8c0cc}
+.zk-cnt{font-weight:900;color:var(--zk-red);font-size:13px}
+.zk-legend{display:flex;gap:12px;justify-content:center;font-size:11.5px;color:var(--zk-sub);margin:8px 0 0;flex-wrap:wrap}
+
+/* ── D. 通貨ペア ── */
+.zk-pairs{max-width:560px;margin:0 auto;display:grid;gap:8px}
+.zk-pair{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center;background:#fff;border:1px solid var(--zk-line);border-radius:12px;padding:10px 12px}
+.zk-pair.best{border:2px solid var(--zk-red);background:var(--zk-red-soft)}
+.zk-pair b{display:block;font-size:14.5px}
+.zk-stars{color:var(--zk-gold);font-size:14px;letter-spacing:1px}
+.zk-stars .off{color:#d6dbe3}
+.zk-pair p{margin:0;font-size:12.5px;line-height:1.6;color:var(--zk-ink)}
+.zk-pair .zk-lv{display:inline-block;font-size:10.5px;font-weight:800;border-radius:4px;padding:1px 6px;margin-bottom:3px;color:#fff;background:var(--zk-green)}
+.zk-pair .zk-lv.mid{background:#e3862b}.zk-pair .zk-lv.hard{background:#7a8798}
+.zk-first{max-width:560px;margin:14px auto 0;background:var(--zk-navy);color:#fff;border-radius:14px;padding:14px;text-align:center}
+.zk-first b{display:block;font-size:13px;opacity:.9;font-weight:700}
+.zk-first strong{display:block;font-size:20px;margin:4px 0 2px;font-family:"Zen Kaku Gothic New",sans-serif}
+.zk-first strong em{font-style:normal;color:#ffe58a}
+.zk-first span{font-size:12px;opacity:.9}
+.zk-cta{margin:14px auto 0;max-width:520px}
