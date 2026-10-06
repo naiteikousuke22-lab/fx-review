@@ -4,7 +4,7 @@
 .zk *{box-sizing:border-box}
 .zk .zk-h{font-family:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;font-weight:900;color:var(--zk-navy);font-size:22px;line-height:1.4;text-align:center;margin:0 0 6px}
 .zk .zk-h small{display:block;font-size:13px;color:var(--zk-red);font-weight:700;letter-spacing:.04em;margin-bottom:2px}
-.zk .zk-lead{word-break:keep-all;overflow-wrap:anywhere;text-align:center;font-size:14px;color:var(--zk-sub);margin:0 0 18px;line-height:1.7}
+.zk .zk-lead{text-wrap:pretty;text-align:center;font-size:14px;color:var(--zk-sub);margin:0 0 18px;line-height:1.7}
 .zk .zk-fine{font-size:11px;color:var(--zk-sub);line-height:1.6;margin:10px 0 0}
 .zk mark{background:linear-gradient(transparent 60%,#ffe58a 60%);color:inherit;padding:0 1px}
 
@@ -143,3 +143,30 @@
 .r2 .r2-pick-body{grid-template-columns:1fr !important}
 .r2 .r2-pick-body figure.r2-banner{max-width:420px;margin:0 auto;width:100%}
 .r2 .lc-banner,img.lc-banner{max-width:420px;margin-left:auto !important;margin-right:auto !important}
+
+/* ── チャート（縦並び版 2026-10-06） ── */
+.zk-tree .zk-q{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:16px}
+.zk-tree .zk-q.sub{background:#2c5a94;font-size:14.5px;margin:0 0 8px}
+.zk-tree .zk-qn{margin:0}
+.zk-way{margin-top:14px;border-radius:14px;padding:10px;border:2px solid}
+.zk-way.yes{border-color:#f3b7ab;background:#fff7f5}.zk-way.no{border-color:#b9cdf2;background:#f5f8ff}
+.zk-way-h{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-weight:800;font-size:14px;color:var(--zk-ink)}
+.zk-row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;background:#fff;border:2px solid var(--zk-line);border-radius:12px;padding:10px 10px 10px 8px;margin-top:8px;text-decoration:none;color:var(--zk-ink)}
+.zk-row.best{border-color:var(--zk-red);box-shadow:0 4px 14px -6px rgba(217,59,59,.45)}
+.zk-row .zk-yn{min-width:44px;text-align:center}
+.zk-row-b img{display:block;height:22px;max-width:150px;object-fit:contain;object-position:left;margin-bottom:3px}
+.zk-row-b b{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:15.5px}
+.zk-row-b b em{font-style:normal;font-size:10.5px;font-weight:800;color:#fff;background:var(--zk-red);border-radius:999px;padding:1px 8px}
+.zk-row-b>span{display:block;font-size:12.5px;color:var(--zk-sub);line-height:1.5;margin-top:2px}
+.zk-go{font-size:22px;color:var(--zk-sub);font-weight:700}
+
+/* 表は社名だけ（小さいロゴは読めないので外した） */
+.zk-tbl tbody th,.zk-rk tbody th{font-size:12.5px}
+.zk-vs tbody th{width:25%;word-break:keep-all;font-size:11px}
+
+/* TOP3の2位・3位：バナーの代わりにロゴ */
+.r2 .r2-sub-card figure.zk-logo{display:grid;place-items:center;height:64px;margin:6px 0;background:#fff;border:1px solid #e1e6ee;border-radius:8px}
+.r2 .r2-sub-card figure.zk-logo img{aspect-ratio:auto !important;width:auto !important;max-width:86% !important;height:30px !important;object-fit:contain !important;border:0 !important}
+
+/* 最後のまとめ：同じSBIバナーが3回目になるので出さない */
+.r2 .lc-banner,img.lc-banner{display:none !important}

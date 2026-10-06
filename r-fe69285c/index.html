@@ -3394,7 +3394,7 @@ body:has(.r2) { background: #fff; }
   /* 離脱防止ポップアップ：PCはマウスが画面上端から出たとき、スマホは記事の30%以上読んだあと素早く上に戻したとき。1セッション1回 */
   const pop = document.getElementById("exit-pop");
   const seen = () => { try { return sessionStorage.getItem("fxk_exit") === "1"; } catch (e) { return false; } };
-  const openPop = why => {
+  const openPop = why => { return; /* 離脱防止ポップアップは使わない（2026-10-06） */
     if (!pop || seen() || !pop.hidden) return;
     pop.hidden = false; document.body.classList.add("pop-open");
     try { sessionStorage.setItem("fxk_exit", "1"); } catch (e) {}

@@ -20,25 +20,25 @@
   var perkOn = perk && (!perk.until || perk.until >= today);
   var perkTxt = perkOn ? "口座開設だけで1,000円（" + perk.until.slice(5).replace("-", "/").replace(/^0/, "") + "まで）" : "口座開設・維持は無料";
 
-  /* A. YES/NOチャート */
+  /* A. YES/NOチャート（スマホで読めるよう、分かれ道ごとに縦に並べる） */
+  var row = function (yn, k, head, sub, best) {
+    return '<a class="zk-row' + (best ? " best" : "") + '" href="#co-' + k + '"><span class="zk-yn zk-' + yn + '">' + (yn === "yes" ? "YES" : "NO") + '</span>' +
+      '<span class="zk-row-b"><b>' + head + (best ? '<em>初心者の本命</em>' : "") + '</b><span>' + sub + '</span></span><span class="zk-go" aria-hidden="true">›</span></a>';
+  };
   var chart =
     '<section class="sec zk" id="zk-chart"><h2 class="zk-h"><small>30秒でわかる</small>あなたに合うFX口座チャート</h2>' +
-    '<p class="zk-lead">質問に <b style="color:#e8553d">YES</b> / <b style="color:#3a6fd8">NO</b> で答えるだけ。<br>迷ったら左の道をたどれば大丈夫です。</p>' +
+    '<p class="zk-lead">質問に <b style="color:#e8553d">YES</b> / <b style="color:#3a6fd8">NO</b> で答えるだけ。</p>' +
     '<div class="zk-tree">' +
-      '<div class="zk-q"><span class="zk-qn">Q1</span><br>FXをするのは、はじめて？</div>' +
-      '<div class="zk-split">' +
-        '<div class="zk-branch"><div class="zk-arrow"><span class="zk-yn zk-yes">YES</span></div>' +
-          '<div class="zk-q"><span class="zk-qn">Q2</span><br>まずは数百円以下で<br>試してみたい？</div>' +
-          '<div class="zk-res2">' +
-            '<div class="zk-col"><div class="zk-arrow"><span class="zk-yn zk-yes">YES</span></div>' + res("sbifxt", "SBI FXトレード", "1通貨＝約6円から。" + (perkOn ? "開設だけで1,000円" : "練習に向く"), true) + '</div>' +
-            '<div class="zk-col"><div class="zk-arrow"><span class="zk-yn zk-no">NO</span></div>' + res("dmm", "DMM FX", "アプリが見やすく、LINEで相談できる") + '</div>' +
-          '</div></div>' +
-        '<div class="zk-branch"><div class="zk-arrow"><span class="zk-yn zk-no">NO</span></div>' +
-          '<div class="zk-q"><span class="zk-qn">Q3</span><br>長く持って<br>スワップを貯めたい？</div>' +
-          '<div class="zk-res2">' +
-            '<div class="zk-col"><div class="zk-arrow"><span class="zk-yn zk-yes">YES</span></div>' + res("minfx", "みんなのFX", "トルコリラ・ペソのスワップが高水準") + '</div>' +
-            '<div class="zk-col"><div class="zk-arrow"><span class="zk-yn zk-no">NO</span></div>' + res("jfx", "JFX", "短期売買（スキャルピング）を公認") + '</div>' +
-          '</div></div>' +
+      '<div class="zk-q"><span class="zk-qn">Q1</span>FXをするのは、はじめて？</div>' +
+      '<div class="zk-way yes"><p class="zk-way-h"><span class="zk-yn zk-yes">YES</span>はじめての人</p>' +
+        '<div class="zk-q sub"><span class="zk-qn">Q2</span>まずは数百円以下で試してみたい？</div>' +
+        row("yes", "sbifxt", "SBI FXトレード", "1通貨＝約6円から。" + (perkOn ? "口座開設だけで1,000円" : "少額の練習に向く"), true) +
+        row("no", "dmm", "DMM FX", "アプリが見やすく、LINEで相談できる") +
+      '</div>' +
+      '<div class="zk-way no"><p class="zk-way-h"><span class="zk-yn zk-no">NO</span>経験がある人</p>' +
+        '<div class="zk-q sub"><span class="zk-qn">Q3</span>長く持って、スワップを貯めたい？</div>' +
+        row("yes", "minfx", "みんなのFX", "トルコリラ・ペソのスワップが高水準") +
+        row("no", "jfx", "JFX", "短期売買（スキャルピング）を公認") +
       '</div>' +
     '</div>' +
     '<div class="zk-concl"><span class="zk-tag">迷ったら、この1社</span><img src="' + logo("sbifxt") + '" alt="SBI FXトレード" style="height:30px;margin-top:6px">' +
@@ -77,12 +77,12 @@
   var keys = A.ranking.filter(function (k) { return SC[k]; });
   var score =
     '<section class="sec zk" id="zk-score"><h2 class="zk-h"><small>ひと目で比較</small>初心者が見るべき5項目</h2>' +
-    '<p class="zk-lead">はじめての口座選びで大事な5つを、◎○△で並べました。<br><mark>◎がいちばん多いのはSBI FXトレード</mark>です。</p>' +
+    '<p class="zk-lead">口座選びで大事な5つを◎○△で並べました。<br><mark>◎がいちばん多いのはSBI FXトレード</mark>です。</p>' +
     '<div class="zk-tbl-wrap"><table class="zk-tbl"><thead><tr><th>FX会社</th>' + cols.map(function (c) { return "<th>" + c[1] + "</th>"; }).join("") + '<th>◎<br>の数</th></tr></thead><tbody>' +
     keys.map(function (k) {
       var n = 0;
       var tds = cols.map(function (c) { var m = mark(SC[k][c[0]]); if (m[0] === "◎") n++; return '<td><span class="zk-s ' + m[1] + '">' + m[0] + "</span></td>"; }).join("");
-      return '<tr' + (k === "sbifxt" ? ' class="best"' : "") + '><th><img src="' + logo(k) + '" alt="">' + name(k) + "</th>" + tds + '<td class="zk-cnt">' + n + "</td></tr>";
+      return '<tr' + (k === "sbifxt" ? ' class="best"' : "") + '><th>' + name(k) + "</th>" + tds + '<td class="zk-cnt">' + n + "</td></tr>";
     }).join("") + "</tbody></table></div>" +
     '<div class="zk-legend"><span><b class="zk-s s5" style="font-size:13px">◎</b> とても良い</span><span><b class="zk-s s4" style="font-size:13px">○</b> 良い</span><span><b class="zk-s s3" style="font-size:13px">△</b> ふつう</span><span><b class="zk-s s2" style="font-size:13px">−</b> 条件つき・向かない</span></div>' +
     '<p class="zk-fine" style="text-align:center">当サイトの評価（各社公式サイトの公表情報をもとに判定）で、掲載順位とは別です。</p>' +
@@ -130,7 +130,7 @@
       return '<div class="zk-panel" data-zk-panel="' + t.id + '"' + (i ? " hidden" : "") + '><table class="zk-rk"><thead><tr><th>順位</th><th>FX会社</th><th>' + t.head[0] + "</th><th>" + t.head[1] + "</th><th></th></tr></thead><tbody>" +
         t.keys.map(function (k, j) {
           var c = t.cells(k);
-          return "<tr" + (k === "sbifxt" ? ' class="best"' : "") + '><td><span class="zk-medal" style="background:' + (medal[j] || "#d9e0ea") + ";color:" + (j < 3 ? "#fff" : "#5f6b7a") + '">' + (j + 1) + '</span></td><th><img src="' + logo(k) + '" alt="">' + name(k) + "</th><td>" + c[0] + "</td><td>" + c[1] + '</td><td><a class="zk-mini" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="zk_' + t.id + '">公式<br>サイト</a></td></tr>';
+          return "<tr" + (k === "sbifxt" ? ' class="best"' : "") + '><td><span class="zk-medal" style="background:' + (medal[j] || "#d9e0ea") + ";color:" + (j < 3 ? "#fff" : "#5f6b7a") + '">' + (j + 1) + '</span></td><th>' + name(k) + "</th><td>" + c[0] + "</td><td>" + c[1] + '</td><td><a class="zk-mini" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="zk_' + t.id + '">公式<br>サイト</a></td></tr>';
         }).join("") + '</tbody></table><p class="zk-fine">' + t.note + (t.id === "swap" ? "掲載6社のうち、スワップの参考値を確認できた会社だけを並べています。" : "") + "</p></div>";
     }).join("") + "</section>";
 
@@ -183,6 +183,10 @@
     put("#terms", pair);
     put("#zk-pair", diff);
     put("#road", score);
+    document.querySelectorAll("#top3 .r2-sub-card").forEach(function (c) {
+      var a = c.querySelector("[data-aff]"), f = c.querySelector("figure.r2-banner"); if (!a || !f || f.classList.contains("zk-logo")) return;
+      f.classList.add("zk-logo"); f.innerHTML = '<img src="' + logo(a.getAttribute("data-aff")) + '" alt="' + name(a.getAttribute("data-aff")) + '">';
+    });
     return true;
   };
   if (!run()) {
