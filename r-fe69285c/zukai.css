@@ -353,3 +353,16 @@ img.zk-ill{max-width:460px}
 .zk-arthead{padding:10px 16px 6px !important}
 .zk-arthead .zk-title{font-size:clamp(11.5px,3.35vw,22px) !important;white-space:nowrap;letter-spacing:-.01em;margin:0 0 6px !important}
 .zk-arthead .zk-pr{margin:0 !important;padding:4px 10px !important;font-size:11px !important;display:inline-block}
+
+/* 4〜6位の折りたたみ行：社名を1行に、役割ラベルはその下（2026-10-08） */
+details.co-fold > summary{display:grid !important;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;column-gap:10px;align-items:center}
+details.co-fold > summary .co-rank{grid-row:1 / span 2}
+details.co-fold > summary small{grid-column:2;grid-row:2;text-align:left !important;font-size:11px !important;white-space:normal}
+details.co-fold > summary::after{grid-column:3;grid-row:1 / span 2}
+details.co-fold > summary{white-space:nowrap;font-size:15px}
+article.co-block .co-head h3{white-space:nowrap;font-size:clamp(15px,4.6vw,20px)}
+/* 目次は中央に */
+nav.zk-toc{text-align:center}
+nav.zk-toc ol{display:inline-block;text-align:left;margin-left:auto;margin-right:auto}
+.zk-toc-more{max-width:360px;margin-left:auto !important;margin-right:auto !important}
+details.co-fold > summary small{justify-self:start !important;margin:0 !important}
