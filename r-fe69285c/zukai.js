@@ -179,10 +179,7 @@
       var d = new Date(Date.now() + 9 * 3600e3), Y = d.getUTCFullYear(), M = d.getUTCMonth() + 1, D = d.getUTCDate();
       hero.insertAdjacentHTML("beforebegin",
         '<div class="zk-article zk-arthead" id="zk-arthead">' +
-          '<p class="zk-crumb">ホーム ＞ FX ＞ 初心者向けFX口座</p>' +
-          '<div class="zk-titlerow"><p class="zk-date"><span>' + Y + '</span>' + M + "/" + String(D).padStart(2, "0") + '</p>' +
-          '<p class="zk-title">FX初心者におすすめの口座ランキング【' + Y + '年' + M + '月】少額から始められる6社を比較</p></div>' +
-          '<div class="zk-by"><img src="img/gen/hero_man.png" alt=""><div><b>FXくらべ帳 編集部</b><span>' + Y + '年' + M + '月' + D + '日 更新</span></div></div>' +
+          '<p class="zk-title">FX初心者おすすめ口座ランキング【' + Y + '年' + M + '月】</p>' +
           '<p class="zk-pr">PR 本記事は広告を含みます</p>' +
         '</div>');
       var perkOf = function (k) { var p = (C[k].perks || [])[0]; return p ? p.amount + "<small>" + p.cond.replace(/（[^）]*）/g, "") + "</small>" : "—"; };
