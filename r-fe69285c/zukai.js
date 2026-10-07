@@ -37,7 +37,7 @@
         row("no", "minfx", "みんなのFX", "1,000通貨（約6,000円）から。米ドル/円0.2銭") +
       '</div>' +
     '</div>' +
-    '<p class="zk-fine" style="text-align:center">チャートの結果は当サイトの考え方です。各社の詳細は下の「各社の特徴」で確認できます。</p>' +
+    '<p class="zk-fine" style="text-align:center">チャートの結果は当サイトの考え方です。各社の詳細は上の「各社の特徴」で確認できます。</p>' +
     '</section>';
 
   /* B. 必要なお金と、1円動いたときの損益 */
@@ -147,6 +147,32 @@
     [["minfx", "1,000通貨から始められる"], ["lightfx", "1,000通貨から始められる"]].forEach(function (x) {
       var f = document.querySelector("#co-" + x[0] + " figure.banner"); if (!f || f.classList.contains("zk-panel")) return;
       f.classList.add("zk-panel"); f.innerHTML = '<div class="zk-panel-in"><img src="' + logo(x[0]) + '" alt="' + name(x[0]) + '"><p>' + x[1] + '</p></div>';
+    });
+    /* 挿絵（Codex画像生成・文字なし） */
+    [["zk-money", "zukai_shogaku"], ["zk-pair", "zukai_pair"], ["zk-chart", "zukai_chart"], ["zk-merit", "zukai_merit"]].forEach(function (x) {
+      var s = document.getElementById(x[0]); if (!s || s.querySelector(".zk-ill")) return;
+      var h = s.querySelector("h2"); if (h) h.insertAdjacentHTML("afterend", '<img class="zk-ill" src="img/zukai/' + x[1] + '.jpg" alt="" loading="lazy">');
+    });
+    /* ── 競合の並び（2026-10-08）：TOP3 → 各社の紹介 → 比較表 → 結論 → 解説 の順に ── */
+    var t3 = document.getElementById("top3"), det = document.getElementById("details");
+    if (t3 && det && !det.dataset.zkMoved) {
+      var detBox = det.closest(".band") || det; det.dataset.zkMoved = "1";
+      t3.after(detBox);
+      var rk2 = document.getElementById("rank"); if (rk2) detBox.after(rk2);
+      var vd = document.getElementById("verdict"); if (vd && rk2) rk2.after(vd);
+    }
+    /* 各社ブロック：バナー → おすすめポイント → 編集部コメント → 評価・スペック → 公式ボタン */
+    document.querySelectorAll("article.co-block").forEach(function (b) {
+      if (b.dataset.zkOrder) return; b.dataset.zkOrder = "1";
+      var q = function (s) { return b.querySelector(":scope > " + s); };
+      var k = (b.id || "").replace("co-", "");
+      var ck = q("ul.checks");
+      if (ck) { var box = document.createElement("div"); box.className = "zk-pt"; box.innerHTML = '<p class="zk-pt-t">' + name(k) + 'のおすすめポイント</p>'; ck.before(box); box.appendChild(ck); }
+      ["figure.banner", "div.zk-pt", "div.editor", "div.co-top", "table.spec", "p.weak", "div.co-sum", "p.micro", "a.co-link", "p.perk-line"].forEach(function (s) { var e = q(s); if (e) b.appendChild(e); });
+      /* 見出しの直下に残った注記（※）は、おすすめポイントの下へ */
+      var pt = q("div.zk-pt"); b.querySelectorAll(":scope > p").forEach(function (p) { if (/^※/.test(p.textContent.trim()) && pt && p.compareDocumentPosition(pt) & 4) pt.after(p); });
+      var ln = q("a.co-link");
+      if (ln && !ln.classList.contains("zk-co-btn")) { ln.classList.add("zk-co-btn"); ln.innerHTML = '<img src="' + logo(k) + '" alt="">' + '<span>公式サイトはこちら</span><i aria-hidden="true">›</i>'; }
     });
     /* ── 記事らしさ（value-advisers型：文字タイトル・日付・PR → アイキャッチ → 導入 → TOP3比較表 → 目次） ── */
     var hero = document.getElementById("hero");
