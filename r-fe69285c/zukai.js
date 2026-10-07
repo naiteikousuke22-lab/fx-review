@@ -118,8 +118,7 @@
     if (!document.getElementById("worry")) return false;
     put("#can", money);
     put("#terms", pair);
-    put("#apply", chart);
-    put("#zk-chart", merit);
+    put("#apply", merit);
     /* 比較表は1つにする：元の横スクロール表（スワップ列あり）を隠し、5項目の表を #rank の中に出す */
     var rk = document.getElementById("rank"), tb = document.getElementById("table");
     if (rk && tb && !document.getElementById("zk-score")) { tb.hidden = true; rk.insertAdjacentHTML("beforeend", score); }
@@ -149,7 +148,7 @@
       f.classList.add("zk-panel"); f.innerHTML = '<div class="zk-panel-in"><img src="' + logo(x[0]) + '" alt="' + name(x[0]) + '"><p>' + x[1] + '</p></div>';
     });
     /* 挿絵（Codex画像生成・文字なし） */
-    [["zk-money", "zukai_shogaku"], ["zk-pair", "zukai_pair"], ["zk-chart", "zukai_chart"], ["zk-merit", "zukai_merit"]].forEach(function (x) {
+    [["zk-money", "zukai_shogaku"], ["zk-pair", "zukai_pair"], ["zk-merit", "zukai_merit"]].forEach(function (x) {
       var s = document.getElementById(x[0]); if (!s || s.querySelector(".zk-ill")) return;
       var h = s.querySelector("h2"); if (h) h.insertAdjacentHTML("afterend", '<img class="zk-ill" src="img/zukai/' + x[1] + '.jpg" alt="" loading="lazy">');
     });
@@ -172,7 +171,7 @@
       /* 見出しの直下に残った注記（※）は、おすすめポイントの下へ */
       var pt = q("div.zk-pt"); b.querySelectorAll(":scope > p").forEach(function (p) { if (/^※/.test(p.textContent.trim()) && pt && p.compareDocumentPosition(pt) & 4) pt.after(p); });
       var ln = q("a.co-link");
-      if (ln && !ln.classList.contains("zk-co-btn")) { ln.classList.add("zk-co-btn"); ln.innerHTML = '<img src="' + logo(k) + '" alt="">' + '<span>公式サイトはこちら</span><i aria-hidden="true">›</i>'; }
+      if (ln && !ln.classList.contains("zk-co-btn")) { ln.classList.add("zk-co-btn"); ln.innerHTML = '<span class="zk-co-btn-s">' + name(k) + 'で</span><span class="zk-co-btn-m">無料口座開設する</span><i aria-hidden="true">›</i>'; ln.insertAdjacentHTML("afterend", '<p class="zk-co-under">口座開設・維持手数料は無料｜最短' + (C[k].apply && C[k].apply.time ? C[k].apply.time : "5分") + 'で申込み</p>'); }
     });
     /* ── 記事らしさ（value-advisers型：文字タイトル・日付・PR → アイキャッチ → 導入 → TOP3比較表 → 目次） ── */
     var hero = document.getElementById("hero");
@@ -187,18 +186,18 @@
           '<p class="zk-pr">PR 本記事は広告を含みます</p>' +
         '</div>');
       var perkOf = function (k) { var p = (C[k].perks || [])[0]; return p ? p.amount + "<small>" + p.cond.replace(/（[^）]*）/g, "") + "</small>" : "—"; };
-      var top = [["sbifxt", "1通貨から取引でき、<br>口座開設だけで特典あり"], ["dmm", "アプリが見やすく、<br>LINEで相談できる"], ["minfx", "1,000通貨から。<br>米ドル/円も原則固定"]];
-      var row = function (label, f) { return "<tr><th>" + label + "</th>" + top.map(function (t, i) { return "<td" + (i ? "" : ' class="no1"') + ">" + f(t[0], t[1]) + "</td>"; }).join("") + "</tr>"; };
+      var why = { sbifxt: "1通貨から・開設だけで特典", dmm: "アプリが見やすい・LINE相談", minfx: "1,000通貨から・低コスト", hirose: "1,000通貨から・キャンペーン多数", lightfx: "1,000通貨から", jfx: "PCで本格的に取引" };
+      var perkS = function (k) { var p = (C[k].perks || [])[0]; if (!p) return "—"; var easy = /口座開設のみ/.test(p.cond); return "<b>" + p.amount + "</b><small>" + (easy ? "開設だけでOK" : "条件あり") + "</small>"; };
+      var rows6 = A.ranking.map(function (k, i) {
+        return '<tr' + (i ? "" : ' class="no1"') + '><th><span class="zk-rank r' + Math.min(i + 1, 4) + '">' + (i + 1) + '位</span><img src="' + logo(k) + '" alt="' + name(k) + '"><em>' + why[k] + '</em>' +
+          '<a class="zk-cmp-btn' + (i ? "" : " main") + '" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="cmp_top">' + (i ? "公式サイト" : "無料で口座開設") + '<i aria-hidden="true">›</i></a></th>' +
+          "<td><b>" + C[k].spec.unit.replace(/（.*）/, "").replace("通貨", "") + "</b><small>通貨から</small><small>" + C[k].spec.fund.replace(/（.*）/, "").replace("〜", "") + "〜</small></td>" +
+          "<td><b>" + C[k].spec.usd + "銭</b><small>原則固定</small></td>" +
+          "<td>" + perkS(k) + "</td></tr>";
+      }).join("");
       var cmp =
-        '<div class="zk-cmp-wrap"><p class="zk-cmp-cap">はじめての人におすすめのFX口座 TOP3</p><table class="zk-cmp"><thead><tr><th></th>' +
-        top.map(function (t, i) { return '<th' + (i ? "" : ' class="no1"') + '><span class="zk-rank r' + (i + 1) + '">総合' + (i + 1) + '位</span><img src="' + logo(t[0]) + '" alt="' + name(t[0]) + '"><b>' + name(t[0]) + "</b></th>"; }).join("") + "</tr></thead><tbody>" +
-        row("おすすめの理由", function (k, why) { return why; }) +
-        row("スプレッド<small>米ドル/円</small>", function (k) { return "<b>" + C[k].spec.usd + "銭</b><small>原則固定・例外あり</small>"; }) +
-        row("最小取引単位", function (k) { return "<b>" + C[k].spec.unit.replace(/（.*）/, "") + "</b><small>" + C[k].spec.fund.replace(/（.*）/, "") + "</small>"; }) +
-        row("初回特典", perkOf) +
-        row("口座開設", function () { return "最短即日"; }) +
-        row("公式サイト", function (k) { return '<a class="zk-cmp-btn" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="cmp_top">' + ({ sbifxt: "SBI FX" }[k] || name(k)) + '<br>公式サイトへ</a>'; }) +
-        '</tbody></table><p class="zk-fine">※スプレッド・特典は各社公式サイトの情報（2026年10月時点）。順位は広告掲載の条件にもとづきます。特典には条件があります。</p></div>';
+        '<div class="zk-cmp-wrap"><p class="zk-cmp-cap">おすすめFX口座ランキング（全6社）</p><table class="zk-cmp zk-cmp6"><thead><tr><th>FX会社</th><th>最小取引単位</th><th>米ドル/円<br>スプレッド</th><th>初回特典</th></tr></thead><tbody>' +
+        rows6 + '</tbody></table><p class="zk-fine">※スプレッドは原則固定（例外あり）。特典は各社公式サイトの情報（2026年10月時点）で、条件があります。順位は広告掲載の条件にもとづきます。</p></div>';
       hero.insertAdjacentHTML("afterend",
         '<div class="zk-article" id="zk-byline">' +
           '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>FXの初心者は、どのFX口座を開設したらいいの？</p></div>' +

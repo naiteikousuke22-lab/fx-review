@@ -278,3 +278,46 @@ a.co-link.zk-co-btn img{width:96px !important;height:auto !important;aspect-rati
 a.co-link.zk-co-btn i{position:absolute;right:14px;font-style:normal;font-size:22px}
 article.co-block p.micro{margin-top:14px}
 .zk-ill{display:block;width:100%;max-width:520px;aspect-ratio:16/9;object-fit:cover;margin:0 auto 12px;border-radius:10px}
+/* 冒頭ランキング表（1〜6位・1行1社） */
+.zk-cmp6{table-layout:fixed}
+.zk-cmp6 thead th{background:#f5f7fa !important;color:#374151;font-size:10.5px !important;line-height:1.35;padding:6px 3px !important}
+.zk-cmp6 thead th:first-child{width:38% !important}
+.zk-cmp6 tbody th{width:38% !important;background:#fff !important;padding:8px 6px !important;text-align:center}
+.zk-cmp6 tbody th img{display:block;width:100% !important;max-width:120px;margin:4px auto 2px}
+.zk-cmp6 tbody th em{display:block;font-style:normal;font-size:10px;font-weight:700;color:#4b5563;line-height:1.35;margin-bottom:5px;word-break:keep-all}
+.zk-cmp6 tr.no1>*{background:#fff8e6 !important}
+.zk-cmp6 tr.no1 th{box-shadow:inset 4px 0 0 #c9a227}
+.zk-cmp6 td b{font-size:13px}
+.zk-rank.r4{background:#c9d1dc;color:#374151}
+.zk-cmp6 .zk-cmp-btn{font-size:11px;padding:6px 2px}
+
+.zk-cmp6 thead th:first-child,.zk-cmp6 tbody th{width:36% !important}
+.zk-cmp6 tbody th em{word-break:normal !important;overflow-wrap:anywhere}
+.zk-cmp6 td{padding:6px 2px !important}
+.zk-cmp6 td b{display:block;font-size:14px;white-space:nowrap}
+.zk-cmp6 td small{display:block;font-size:9.5px;line-height:1.35;white-space:nowrap}
+
+/* ── CTAを分かりやすく（2026-10-08） ── */
+.zk-cmp-btn{position:relative;padding:8px 14px 8px 6px !important}
+.zk-cmp-btn i{position:absolute;right:8px;top:50%;transform:translateY(-52%);font-style:normal;font-size:15px}
+.zk-cmp-btn.main{background:linear-gradient(#ff8a1f,#ff6a00) !important;box-shadow:0 3px 0 #b84300 !important;font-size:12px !important;padding:10px 14px 10px 6px !important}
+a.co-link.zk-co-btn{flex-direction:column;gap:0 !important;background:linear-gradient(#22b45a,#169a47) !important;border:0 !important;color:#fff !important;padding:12px 40px 12px 16px !important;box-shadow:0 5px 0 #0f6e33 !important;min-height:62px}
+a.co-link.zk-co-btn .zk-co-btn-s{font-size:12.5px;font-weight:700;opacity:.95}
+a.co-link.zk-co-btn .zk-co-btn-m{font-size:19px;font-weight:900;letter-spacing:.02em}
+a.co-link.zk-co-btn i{color:#fff;font-size:26px;right:18px}
+a.co-link.zk-co-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #0f6e33 !important}
+.zk-co-under{margin:8px 0 2px;text-align:center;font-size:12px;color:#5f6b7a}
+
+/* ── PCで変にならないように ── */
+#sticky.sticky-cta{left:50% !important;right:auto !important;transform:translateX(-50%);width:min(560px,calc(100vw - 20px)) !important;max-width:min(560px,calc(100vw - 20px)) !important}
+article.co-block figure.banner{max-width:460px;margin-left:auto !important;margin-right:auto !important}
+.zk-cmp-wrap,.zk-know,nav.zk-toc{max-width:620px;margin-left:auto;margin-right:auto}
+.r2-pick figure.r2-banner{max-width:460px;margin:0 auto}
+img.zk-ill{max-width:460px}
+@media (min-width:600px){
+  .zk-cmp6 tbody th img{max-width:140px}
+  .zk-cmp6 td b{font-size:16px}
+  .zk-cmp6 td small{font-size:11px}
+}
+.zk-cmp6 td small{white-space:normal !important;word-break:keep-all;overflow-wrap:anywhere}
+.zk-cmp6 td b{white-space:nowrap}
