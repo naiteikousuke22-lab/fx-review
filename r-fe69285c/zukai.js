@@ -226,12 +226,12 @@
         rows6 + '</tbody></table><p class="zk-fine">※スプレッドは原則固定（例外あり）。特典は各社公式サイトの情報（2026年10月時点）で、条件があります。順位は広告掲載の条件にもとづきます。</p></div>';
       hero.insertAdjacentHTML("afterend",
         '<div class="zk-article" id="zk-byline">' +
+          quiz +
           '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>FXの初心者は、どのFX口座を開設したらいいの？</p></div>' +
           '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>少ないお金から、損を小さく始められる口座が知りたい！</p></div>' +
           '<p class="zk-leadp">FX会社は国内にたくさんあり、取引単位やコスト、特典の条件を1社ずつ比べるのは大変です。</p>' +
           '<p class="zk-leadp">この記事では、当サイトが提携する金融庁登録のFX会社6社を、<mark>はじめての人が見るべき「少額」「コスト」「特典」</mark>の3つで比べて紹介します。</p>' +
           cmp +
-          quiz +
           '<nav class="zk-toc"><p class="zk-toc-t">目次</p><ol id="zk-toc-list"></ol></nav>' +
         '</div>');
       var skip = { worry: 1 };

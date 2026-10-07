@@ -393,3 +393,4 @@ nav.zk-toc{text-align:left !important}
 nav.zk-toc ol{display:block !important;text-align:left !important;margin:8px 0 2px !important;padding-left:26px !important}
 nav.zk-toc .zk-toc-t{text-align:left !important}
 .zk-toc-more{max-width:none !important;margin-left:0 !important;margin-right:0 !important}
+#zk-byline > .zk-quiz:first-child{margin-top:4px}
