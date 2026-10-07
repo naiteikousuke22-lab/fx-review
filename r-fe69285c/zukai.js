@@ -109,6 +109,30 @@
     '<div class="zk-tip"><b>注意点への対策はシンプル</b><span><mark>1通貨・低いレバレッジ</mark>で始めれば、1円動いても損益は±1円。<br>仕組みに慣れてから、少しずつ数量を増やしましょう。</span></div>' +
     "</section>";
 
+  /* かんたん診断の質問と結果の一言 */
+  var QZ = [
+    { q: "FXの取引経験はありますか？", o: [["はじめて", { first: 2 }], ["少しある", { some: 2 }], ["慣れている", { veteran: 2 }]] },
+    { q: "最初に入れるお金はどれくらい？", o: [["1,000円未満", { lt1: 3 }], ["1万円くらい", { "1to10": 2 }], ["5万円以上", { gt10: 2 }]] },
+    { q: "いちばん大事にしたいことは？", o: [["少しずつ練習したい", { small: 3 }], ["特典をもらいたい", { perk: 3 }], ["スマホで見やすく", { app: 3 }], ["コストを抑えたい", { cost: 3 }]] }
+  ];
+  var QR = { sbifxt: "1通貨（約6円）から練習でき、口座開設だけで1,000円の特典つき。", minfx: "1,000通貨から始められ、米ドル/円のコストも原則固定。", hirose: "1,000通貨から。キャンペーンを楽しみながら続けやすい。", lightfx: "1,000通貨から始められる口座。", jfx: "PCでじっくり取引したい人に向く口座。", dmm: "アプリが見やすく、困ったらLINEで相談できる。" };
+  document.addEventListener("click", function (e) {
+    var box = e.target.closest("#zk-quiz"); if (!box) return;
+    var st = box._st || (box._st = []);
+    var show = function (i) { box.querySelectorAll(".zk-qs").forEach(function (q) { q.hidden = +q.dataset.i !== i; }); box.querySelector(".zk-qres").hidden = true; };
+    if (e.target.closest(".zk-qback")) { st.pop(); show(st.length); return; }
+    if (e.target.closest(".zk-qretry")) { st.length = 0; show(0); return; }
+    var o = e.target.closest(".zk-qo"); if (!o) return;
+    var i = +o.closest(".zk-qs").dataset.i; st[i] = +o.dataset.j; st.length = i + 1;
+    if (i + 1 < QZ.length) { show(i + 1); return; }
+    var best = A.ranking.map(function (k, r) { var s = 0; st.forEach(function (j, qi) { var w = QZ[qi].o[j][1]; for (var key in w) s += (SC[k][key] || 0) * w[key]; }); return { k: k, s: s - r * 0.01 }; }).sort(function (a, b) { return b.s - a.s; });
+    var k = best[0].k, k2 = best[1].k;
+    box.querySelectorAll(".zk-qs").forEach(function (q) { q.hidden = true; });
+    var res = box.querySelector(".zk-qres"); res.hidden = false;
+    res.innerHTML = '<p class="zk-qn">診断結果</p><p class="zk-qr-h">あなたにおすすめは</p><img src="' + logo(k) + '" alt="' + name(k) + '"><p class="zk-qr-n">' + name(k) + '</p><p class="zk-qr-t">' + QR[k] + "</p>" + cta(k, "quiz") +
+      '<p class="zk-qr-2">2番目に合うのは <a href="#co-' + k2 + '">' + name(k2) + ' ›</a></p><button type="button" class="zk-qretry">もう一度診断する</button>';
+    res.scrollIntoView({ block: "nearest" });
+  });
   var put = function (afterSel, html) {
     var el = document.querySelector(afterSel);
     if (el && !document.getElementById(html.match(/id="([^"]+)"/)[1])) el.insertAdjacentHTML("afterend", html);
@@ -192,6 +216,11 @@
           "<td><b>" + C[k].spec.usd + "銭</b><small>原則固定</small></td>" +
           "<td>" + perkS(k) + "</td></tr>";
       }).join("");
+      /* かんたん診断（value-advisers参考：1問ずつ表示→おすすめ1社） */
+      var quiz = '<div class="zk-quiz" id="zk-quiz"><p class="zk-quiz-t">かんたん3問！あなたに合うFX口座診断</p><p class="zk-quiz-l">3つの質問に答えるだけで、あなたに合うFX口座がわかります。</p>' +
+        QZ.map(function (x, i) { return '<div class="zk-qs"' + (i ? " hidden" : "") + ' data-i="' + i + '"><p class="zk-qn">QUESTION ' + (i + 1) + " / " + QZ.length + '</p><p class="zk-qq">' + x.q + "</p>" +
+          x.o.map(function (o, j) { return '<button type="button" class="zk-qo" data-j="' + j + '">' + o[0] + "</button>"; }).join("") + (i ? '<button type="button" class="zk-qback">‹ 前の質問へ</button>' : "") + "</div>"; }).join("") +
+        '<div class="zk-qres" hidden></div></div>';
       var cmp =
         '<div class="zk-cmp-wrap"><p class="zk-cmp-cap">おすすめFX口座ランキング（全6社）</p><table class="zk-cmp zk-cmp6"><thead><tr><th>FX会社</th><th>最小取引単位</th><th>米ドル/円<br>スプレッド</th><th>初回特典</th></tr></thead><tbody>' +
         rows6 + '</tbody></table><p class="zk-fine">※スプレッドは原則固定（例外あり）。特典は各社公式サイトの情報（2026年10月時点）で、条件があります。順位は広告掲載の条件にもとづきます。</p></div>';
@@ -202,6 +231,7 @@
           '<p class="zk-leadp">FX会社は国内にたくさんあり、取引単位やコスト、特典の条件を1社ずつ比べるのは大変です。</p>' +
           '<p class="zk-leadp">この記事では、当サイトが提携する金融庁登録のFX会社6社を、<mark>はじめての人が見るべき「少額」「コスト」「特典」</mark>の3つで比べて紹介します。</p>' +
           cmp +
+          quiz +
           '<nav class="zk-toc"><p class="zk-toc-t">目次</p><ol id="zk-toc-list"></ol></nav>' +
         '</div>');
       var skip = { worry: 1 };

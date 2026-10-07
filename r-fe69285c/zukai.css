@@ -366,3 +366,25 @@ nav.zk-toc{text-align:center}
 nav.zk-toc ol{display:inline-block;text-align:left;margin-left:auto;margin-right:auto}
 .zk-toc-more{max-width:360px;margin-left:auto !important;margin-right:auto !important}
 details.co-fold > summary small{justify-self:start !important;margin:0 !important}
+
+/* ── かんたん診断（2026-10-08） ── */
+.zk-quiz{max-width:620px;margin:18px auto;background:#f3f6fa;border-radius:14px;padding:18px 14px;text-align:center}
+.zk-quiz-t{margin:0;font-family:"Zen Kaku Gothic New",sans-serif;font-weight:900;font-size:19px;color:#1d2330}
+.zk-quiz-l{margin:6px 0 14px;font-size:13px;color:#4b5563;line-height:1.6}
+.zk-qs,.zk-qres{background:#fff;border-radius:12px;padding:16px 14px;text-align:left;box-shadow:0 4px 14px -10px rgba(18,58,107,.4)}
+.zk-qn{margin:0;font-size:12px;font-weight:800;color:#1f9d55;letter-spacing:.05em}
+.zk-qq{margin:4px 0 12px;font-size:16px;font-weight:800;color:#1d2330}
+.zk-qo{display:block;width:100%;margin:0 0 8px;padding:13px 14px;text-align:left;font:inherit;font-size:15px;font-weight:700;color:#1d2330;background:#fff;border:1.5px solid #cfd8e3;border-radius:10px;cursor:pointer;position:relative}
+.zk-qo::after{content:"›";position:absolute;right:14px;color:#9aa6b2;font-size:18px;top:50%;transform:translateY(-55%)}
+.zk-qo:hover,.zk-qo:active{border-color:#1f9d55;background:#f0faf4}
+.zk-qback,.zk-qretry{background:none;border:0;font:inherit;font-size:13px;color:#1d4f91;cursor:pointer;padding:6px 0;margin-top:2px}
+.zk-qres{text-align:center}
+.zk-qr-h{margin:6px 0 4px;font-size:14px;color:#4b5563;font-weight:700}
+.zk-qres img{display:block;width:180px !important;height:auto !important;aspect-ratio:3/1 !important;margin:4px auto}
+.zk-qr-n{margin:0;font-size:22px;font-weight:900;color:#123a6b}
+.zk-qr-t{margin:6px 0 12px;font-size:14px;line-height:1.7}
+.zk-qr-2{margin:10px 0 0;font-size:13px}
+.zk-qr-2 a{color:#1d4f91;font-weight:700}
+.zk-qres .r2-btn .b-2{font-size:17px !important;white-space:nowrap}
+.zk-qres .r2-btn{padding-left:12px !important;padding-right:44px !important}
+.zk-quiz-t{font-size:clamp(15px,4.6vw,19px);white-space:nowrap}
