@@ -321,3 +321,11 @@ img.zk-ill{max-width:460px}
 }
 .zk-cmp6 td small{white-space:normal !important;word-break:keep-all;overflow-wrap:anywhere}
 .zk-cmp6 td b{white-space:nowrap}
+
+/* ── 操作画面のカルーセル：小さく、2枚ずつ見える大きさに（2026-10-08） ── */
+#demo .swipe-slide{flex:0 0 46% !important;width:46% !important;max-width:200px !important}
+#demo .sw-phone{max-width:180px;margin:0 auto}
+#demo .sw-phone img{width:100% !important;height:auto !important}
+#demo .sw-t{font-size:13px}
+#demo .sw-d{font-size:11.5px}
+@media (min-width:600px){ #demo .swipe-slide{flex:0 0 31% !important;width:31% !important;max-width:210px !important} }
