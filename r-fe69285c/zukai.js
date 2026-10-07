@@ -148,6 +148,32 @@
       var f = document.querySelector("#co-" + x[0] + " figure.banner"); if (!f || f.classList.contains("zk-panel")) return;
       f.classList.add("zk-panel"); f.innerHTML = '<div class="zk-panel-in"><img src="' + logo(x[0]) + '" alt="' + name(x[0]) + '"><p>' + x[1] + '</p></div>';
     });
+    /* ── 記事らしさ：書き手・更新日・リード・この記事でわかること・目次 ── */
+    var hero = document.getElementById("hero");
+    if (hero && !document.getElementById("zk-byline")) {
+      var upd = (P.site && P.site.updated) || "";
+      var d = new Date(Date.now() + 9 * 3600e3); var ymd = d.getUTCFullYear() + "年" + (d.getUTCMonth() + 1) + "月" + d.getUTCDate() + "日";
+      hero.insertAdjacentHTML("afterend",
+        '<div class="zk-article" id="zk-byline">' +
+          '<div class="zk-by"><img src="img/gen/hero_man.png" alt=""><div><b>FXくらべ帳 編集部</b><span>' + ymd + ' 更新</span></div><em>PR</em></div>' +
+          '<p class="zk-leadp">「FXを始めてみたいけれど、口座が多すぎてどれを選べばいいかわからない」。そんな人に向けて、<b>はじめてでも少額から始めやすいFX口座</b>を、当サイトで提携する6社から比べて紹介します。</p>' +
+          '<details class="zk-toc"><summary>この記事の目次（タップで開く）</summary><ol id="zk-toc-list"></ol></details>' +
+        '</div>');
+      var skip = { worry: 1, faq: 1 };
+      var list = document.getElementById("zk-toc-list"), n = 0;
+      document.querySelectorAll("#app h2").forEach(function (h) {
+        var sec = h.closest("section[id]"); if (!sec || skip[sec.id] || !h.offsetParent) return;
+        var t = h.innerText.replace(/＼[^／]*／/g, "").replace(/^(申込み|FAQ)\s*/, "").replace(/\s+/g, " ").trim();
+        n++; list.insertAdjacentHTML("beforeend", '<li' + (n > 6 ? ' class="more"' : "") + '><a href="#' + sec.id + '">' + t + "</a></li>");
+      });
+      if (n > 6) list.insertAdjacentHTML("afterend", '<button type="button" class="zk-toc-more" onclick="this.previousElementSibling.classList.add(\'all\');this.remove()">目次をすべて見る（' + n + '項目）▼</button>');
+      /* 見出しの頭に章番号（記事の章立て） */
+      var c = 0;
+      document.querySelectorAll("#app h2").forEach(function (h) {
+        var sec = h.closest("section[id]"); if (!sec || skip[sec.id] || !h.offsetParent || (h.previousElementSibling && h.previousElementSibling.classList.contains("zk-no"))) return;
+        c++; h.insertAdjacentHTML("beforebegin", '<p class="zk-no">' + String(c).padStart(2, "0") + "</p>");
+      });
+    }
     var ep = document.getElementById("exit-pop"); if (ep) ep.remove();
     return true;
   };
