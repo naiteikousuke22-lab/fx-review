@@ -148,32 +148,50 @@
       var f = document.querySelector("#co-" + x[0] + " figure.banner"); if (!f || f.classList.contains("zk-panel")) return;
       f.classList.add("zk-panel"); f.innerHTML = '<div class="zk-panel-in"><img src="' + logo(x[0]) + '" alt="' + name(x[0]) + '"><p>' + x[1] + '</p></div>';
     });
-    /* ── 記事らしさ：書き手・更新日・リード・この記事でわかること・目次 ── */
+    /* ── 記事らしさ（value-advisers型：文字タイトル・日付・PR → アイキャッチ → 導入 → TOP3比較表 → 目次） ── */
     var hero = document.getElementById("hero");
-    if (hero && !document.getElementById("zk-byline")) {
-      var upd = (P.site && P.site.updated) || "";
-      var d = new Date(Date.now() + 9 * 3600e3); var ymd = d.getUTCFullYear() + "年" + (d.getUTCMonth() + 1) + "月" + d.getUTCDate() + "日";
+    if (hero && !document.getElementById("zk-arthead")) {
+      var d = new Date(Date.now() + 9 * 3600e3), Y = d.getUTCFullYear(), M = d.getUTCMonth() + 1, D = d.getUTCDate();
+      hero.insertAdjacentHTML("beforebegin",
+        '<div class="zk-article zk-arthead" id="zk-arthead">' +
+          '<p class="zk-crumb">ホーム ＞ FX ＞ 初心者向けFX口座</p>' +
+          '<div class="zk-titlerow"><p class="zk-date"><span>' + Y + '</span>' + M + "/" + String(D).padStart(2, "0") + '</p>' +
+          '<p class="zk-title">FX初心者におすすめの口座ランキング【' + Y + '年' + M + '月】少額から始められる6社を比較</p></div>' +
+          '<div class="zk-by"><img src="img/gen/hero_man.png" alt=""><div><b>FXくらべ帳 編集部</b><span>' + Y + '年' + M + '月' + D + '日 更新</span></div></div>' +
+          '<p class="zk-pr">PR 本記事は広告を含みます</p>' +
+        '</div>');
+      var perkOf = function (k) { var p = (C[k].perks || [])[0]; return p ? p.amount + "<small>" + p.cond.replace(/（[^）]*）/g, "") + "</small>" : "—"; };
+      var top = [["sbifxt", "1通貨から取引でき、<br>口座開設だけで特典あり"], ["dmm", "アプリが見やすく、<br>LINEで相談できる"], ["minfx", "1,000通貨から。<br>米ドル/円も原則固定"]];
+      var row = function (label, f) { return "<tr><th>" + label + "</th>" + top.map(function (t, i) { return "<td" + (i ? "" : ' class="no1"') + ">" + f(t[0], t[1]) + "</td>"; }).join("") + "</tr>"; };
+      var cmp =
+        '<div class="zk-cmp-wrap"><p class="zk-cmp-cap">はじめての人におすすめのFX口座 TOP3</p><table class="zk-cmp"><thead><tr><th></th>' +
+        top.map(function (t, i) { return '<th' + (i ? "" : ' class="no1"') + '><span class="zk-rank r' + (i + 1) + '">総合' + (i + 1) + '位</span><img src="' + logo(t[0]) + '" alt="' + name(t[0]) + '"><b>' + name(t[0]) + "</b></th>"; }).join("") + "</tr></thead><tbody>" +
+        row("おすすめの理由", function (k, why) { return why; }) +
+        row("スプレッド<small>米ドル/円</small>", function (k) { return "<b>" + C[k].spec.usd + "銭</b><small>原則固定・例外あり</small>"; }) +
+        row("最小取引単位", function (k) { return "<b>" + C[k].spec.unit.replace(/（.*）/, "") + "</b><small>" + C[k].spec.fund.replace(/（.*）/, "") + "</small>"; }) +
+        row("初回特典", perkOf) +
+        row("口座開設", function () { return "最短即日"; }) +
+        row("公式サイト", function (k) { return '<a class="zk-cmp-btn" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="cmp_top">' + ({ sbifxt: "SBI FX" }[k] || name(k)) + '<br>公式サイトへ</a>'; }) +
+        '</tbody></table><p class="zk-fine">※スプレッド・特典は各社公式サイトの情報（2026年10月時点）。順位は広告掲載の条件にもとづきます。特典には条件があります。</p></div>';
       hero.insertAdjacentHTML("afterend",
         '<div class="zk-article" id="zk-byline">' +
-          '<div class="zk-by"><img src="img/gen/hero_man.png" alt=""><div><b>FXくらべ帳 編集部</b><span>' + ymd + ' 更新</span></div><em>PR</em></div>' +
-          '<p class="zk-leadp">「FXを始めてみたいけれど、口座が多すぎてどれを選べばいいかわからない」。そんな人に向けて、<b>はじめてでも少額から始めやすいFX口座</b>を、当サイトで提携する6社から比べて紹介します。</p>' +
-          '<details class="zk-toc"><summary>この記事の目次（タップで開く）</summary><ol id="zk-toc-list"></ol></details>' +
+          '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>FXの初心者は、どのFX口座を開設したらいいの？</p></div>' +
+          '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>少ないお金から、損を小さく始められる口座が知りたい！</p></div>' +
+          '<p class="zk-leadp">FX会社は国内にたくさんあり、取引単位やコスト、特典の条件を1社ずつ比べるのは大変です。</p>' +
+          '<p class="zk-leadp">この記事では、当サイトが提携する金融庁登録のFX会社6社を、<mark>はじめての人が見るべき「少額」「コスト」「特典」</mark>の3つで比べて紹介します。</p>' +
+          cmp +
+          '<nav class="zk-toc"><p class="zk-toc-t">目次</p><ol id="zk-toc-list"></ol></nav>' +
         '</div>');
-      var skip = { worry: 1, faq: 1 };
+      var skip = { worry: 1 };
       var list = document.getElementById("zk-toc-list"), n = 0;
       document.querySelectorAll("#app h2").forEach(function (h) {
         var sec = h.closest("section[id]"); if (!sec || skip[sec.id] || !h.offsetParent) return;
         var t = h.innerText.replace(/＼[^／]*／/g, "").replace(/^(申込み|FAQ)\s*/, "").replace(/\s+/g, " ").trim();
-        n++; list.insertAdjacentHTML("beforeend", '<li' + (n > 6 ? ' class="more"' : "") + '><a href="#' + sec.id + '">' + t + "</a></li>");
+        n++; list.insertAdjacentHTML("beforeend", '<li' + (n > 7 ? ' class="more"' : "") + '><a href="#' + sec.id + '">' + t + "</a></li>");
       });
-      if (n > 6) list.insertAdjacentHTML("afterend", '<button type="button" class="zk-toc-more" onclick="this.previousElementSibling.classList.add(\'all\');this.remove()">目次をすべて見る（' + n + '項目）▼</button>');
-      /* 見出しの頭に章番号（記事の章立て） */
-      var c = 0;
-      document.querySelectorAll("#app h2").forEach(function (h) {
-        var sec = h.closest("section[id]"); if (!sec || skip[sec.id] || !h.offsetParent || (h.previousElementSibling && h.previousElementSibling.classList.contains("zk-no"))) return;
-        c++; h.insertAdjacentHTML("beforebegin", '<p class="zk-no">' + String(c).padStart(2, "0") + "</p>");
-      });
+      if (n > 7) list.insertAdjacentHTML("afterend", '<button type="button" class="zk-toc-more" onclick="this.previousElementSibling.classList.add(\'all\');this.remove()">目次をすべて見る（' + n + '項目）▼</button>');
     }
+    var wr = document.getElementById("worry"); if (wr) wr.hidden = true;
     var ep = document.getElementById("exit-pop"); if (ep) ep.remove();
     return true;
   };
