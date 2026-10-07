@@ -217,6 +217,20 @@
       if (n > 7) list.insertAdjacentHTML("afterend", '<button type="button" class="zk-toc-more" onclick="this.previousElementSibling.classList.add(\'all\');this.remove()">目次をすべて見る（' + n + '項目）▼</button>');
     }
     var wr = document.getElementById("worry"); if (wr) wr.hidden = true;
+    /* キャンペーン比較：表 → ロゴ付きカード（2026-10-08） */
+    var camp = document.getElementById("camp");
+    if (camp && !camp.querySelector(".zk-camp")) {
+      var tw = camp.querySelector(".table-scroll"); var h2 = camp.querySelector("h2"); if (h2) h2.innerHTML = "口座開設キャンペーン比較";
+      var cards = A.ranking.map(function (k, i) {
+        var p = (C[k].perks || [])[0]; if (!p) return "";
+        var easy = /口座開設のみ/.test(p.cond);
+        var cond = p.cond.replace(/口座開設のみ。?/, "").replace(/（要エントリー）/, "").trim() + "（要エントリー）";
+        return '<div class="zk-cc' + (easy ? " easy" : "") + '"><div class="zk-cc-l"><span class="zk-cc-rk">' + (i + 1) + '位</span><img src="' + logo(k) + '" alt="' + name(k) + '"></div>' +
+          '<div class="zk-cc-m"><span class="zk-cc-tag">' + (easy ? "口座開設だけでOK" : "取引・入金などの条件あり") + '</span><p class="zk-cc-amt">' + p.amount.replace("円", "<small>円</small>") + '</p><p class="zk-cc-cond">' + cond + '</p></div>' +
+          '<a class="zk-cc-btn" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="camp">' + (easy ? "無料で<br>口座開設" : "詳しく<br>見る") + '</a></div>';
+      }).join("");
+      if (tw) tw.outerHTML = '<div class="zk-camp">' + cards + "</div>";
+    }
     var ep = document.getElementById("exit-pop"); if (ep) ep.remove();
     return true;
   };
