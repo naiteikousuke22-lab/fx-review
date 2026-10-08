@@ -15,6 +15,7 @@
   var res = function (k, head, sub, best) {
     return '<a class="zk-res' + (best ? " best" : "") + '" href="#co-' + k + '"><img src="' + logo(k) + '" alt="' + name(k) + '"><b>' + head + '</b><span>' + sub + '</span></a>';
   };
+  var TOP = A.ranking[0];
   var perk = (C.sbifxt.perks || [])[0];
   var today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
   var perkOn = perk && (!perk.until || perk.until >= today);
@@ -71,12 +72,12 @@
   var keys = A.ranking.filter(function (k) { return SC[k]; });
   var score =
     '<section class="sec zk" id="zk-score"><p class="zk-eb">6社をひと目で比較</p><h2 class="zk-h">はじめての人が見る5項目</h2>' +
-    '<p class="zk-lead">口座選びで大事な5つを◎○△で並べました。<br><mark>◎がいちばん多いのはSBI FXトレード</mark>です。</p>' +
+    '<p class="zk-lead">口座選びで大事な5つを◎○△で並べました。</p>' +
     '<div class="zk-tbl-wrap"><table class="zk-tbl"><thead><tr><th>FX会社</th>' + cols.map(function (c) { return "<th>" + c[1] + "</th>"; }).join("") + '<th>◎<br>の数</th></tr></thead><tbody>' +
     keys.map(function (k) {
       var n = 0;
       var tds = cols.map(function (c) { var m = mark(SC[k][c[0]]); if (m[0] === "◎") n++; return '<td><span class="zk-s ' + m[1] + '">' + m[0] + "</span></td>"; }).join("");
-      return '<tr' + (k === "sbifxt" ? ' class="best"' : "") + '><th>' + name(k) + "</th>" + tds + '<td class="zk-cnt">' + n + "</td></tr>";
+      return '<tr' + (k === TOP ? ' class="best"' : "") + '><th>' + name(k) + "</th>" + tds + '<td class="zk-cnt">' + n + "</td></tr>";
     }).join("") + "</tbody></table></div>" +
     '<div class="zk-legend"><span><b class="zk-s s5" style="font-size:13px">◎</b> とても良い</span><span><b class="zk-s s4" style="font-size:13px">○</b> 良い</span><span><b class="zk-s s3" style="font-size:13px">△</b> ふつう</span><span><b class="zk-s s2" style="font-size:13px">−</b> 条件つき・向かない</span></div>' +
     '<p class="zk-fine" style="text-align:center">当サイトの評価（各社公式サイトの公表情報をもとに判定）で、掲載順位とは別です。</p>' +
@@ -158,7 +159,7 @@
     if (last && !last.querySelector(".zk-last-btn")) {
       var dead = last.querySelector(".lc-dead"); if (dead) dead.innerHTML = dead.innerHTML.replace("残り", "あと");
       var link = last.querySelector(".lc-link");
-      if (link) link.insertAdjacentHTML("beforebegin", '<div class="zk-last-btn">' + cta("sbifxt", "last_btn") + '<p class="zk-under">口座開設・維持手数料は無料</p></div>');
+      if (link) link.insertAdjacentHTML("beforebegin", '<div class="zk-last-btn">' + cta(TOP, "last_btn") + '<p class="zk-under">口座開設・維持手数料は無料</p></div>');
       if (link) link.remove();
     }
     document.querySelectorAll("#top3 .r2-sub-card").forEach(function (c) {
@@ -258,6 +259,9 @@
       }).join("");
       if (tw) tw.outerHTML = '<div class="zk-camp">' + cards + "</div>";
     }
+    /* 1位の特典が「取引条件つき」なら、大きな金額は出さず強みの一言にする（条件の重い特典を主役にしない） */
+    var tp = (C[TOP].perks || [])[0], pk = document.querySelector(".r2-pick .r2-perk");
+    if (pk && tp && !/口座開設のみ/.test(tp.cond) && !pk.dataset.zk) { pk.dataset.zk = "1"; pk.innerHTML = '<span class="r2-perk-l">選ばれる理由</span><span class="zk-pk-why">' + (A.variants.compare2.top3.award ? A.variants.compare2.top3.award.text : "") + "</span>"; }
     var ep = document.getElementById("exit-pop"); if (ep) ep.remove();
     return true;
   };
