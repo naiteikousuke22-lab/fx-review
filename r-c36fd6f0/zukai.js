@@ -58,7 +58,7 @@
     { k: "dmm", unit: "1万通貨〜", need: "約6万円", needW: 100, pl: "1万円", plW: 100, note: "（ミニ通貨ペアは1,000通貨・約6,000円〜）" }
   ];
   var money =
-    '<section class="sec zk" id="zk-money"><p class="zk-eb">図でわかる</p><h2 class="zk-h">約6円から始められる</h2>' +
+    '<section class="sec zk" id="zk-money"><p class="zk-eb">比べる前に、まずここ</p><h2 class="zk-h">始めるのに必要なお金</h2>' +
     '<p class="zk-lead">FXは会社によって、<br><mark>始めるのに必要なお金</mark>と<mark>1円動いたときの損益</mark>が大きく違います。</p>' +
     '<div class="zk-key"><span>最初に必要なお金</span><span class="l">1円動いたときの損益</span></div>' +
     '<div class="zk-money">' + rows.map(function (r) {
@@ -101,12 +101,12 @@
     ["ポンド/円", 1, "hard", "上級者向け", "1日の値動きが大きく、短い時間で損益が大きくふれやすい。"]
   ];
   var pair =
-    '<section class="sec zk" id="zk-pair"><p class="zk-eb">はじめての1回目は</p><h2 class="zk-h">初心者におすすめの通貨ペア</h2>' +
+    '<section class="sec zk" id="zk-pair"><p class="zk-eb">はじめての1回目は</p><h2 class="zk-h">最初はどの国のお金で取引する？</h2>' +
     '<p class="zk-lead">FXは「どの通貨を取引するか」も大事。<br>最初は<mark>情報が多くて値動きが読みやすい通貨</mark>が安心です。</p>' +
     '<div class="zk-pairs">' + pairs.map(function (p) {
       return '<div class="zk-pair' + (p[5] ? " best" : "") + '"><div><b>' + p[0] + "</b>" + star(p[1]) + '</div><div><span class="zk-lv ' + p[2] + '">' + p[3] + "</span><p>" + p[4] + "</p></div></div>";
     }).join("") + "</div>" +
-    '<div class="zk-first"><b>最初の1回目のおすすめ</b><strong><em>米ドル/円</em> × <em>1通貨</em></strong><span>必要なお金は約6円。1円動いても損益は±1円です。</span></div>' +
+    '<div class="zk-first"><b>最初の1回目のおすすめ</b><strong><em>米ドル/円</em> × <em>約6円</em></strong><span>1通貨（いちばん少ない量）で取引する場合の目安です。1円動いても損益は±1円です。</span></div>' +
     "</section>";
 
   /* H. メリットと注意点 */
@@ -152,6 +152,9 @@
   var run = function () {
     if (!document.getElementById("worry")) return false;
     put("#can", money);
+    var tmS = document.getElementById("terms"), mnS = document.getElementById("zk-money");
+    if (tmS && mnS && document.getElementById("zk-byline") && tmS.previousElementSibling && tmS.previousElementSibling.id === "zk-byline") tmS.after(mnS);
+    document.querySelectorAll("text.rl-txt").forEach(function (t) { if (t.textContent === "スワップ") t.textContent = "金利"; });
     put("#terms", pair);
     put("#apply", merit);
     /* 比較表は1つにする：元の横スクロール表（スワップ列あり）を隠し、5項目の表を #rank の中に出す */
@@ -166,7 +169,7 @@
       if (k && C[k]) {
         var nd = needOf(k), pk = (C[k].perks || [])[0];
         rows.push('<tr><th>始めるのに<br>必要なお金</th><td><b class="zk-yen">' + nd.main + "〜</b><small>" + nd.sub + "</small></td></tr>");
-        rows.push('<tr><th>取引に<br>かかるコスト</th><td><b class="zk-yen">' + costOf(k) + "</b><small>1,000通貨あたり</small>" + costNote(k) + "</td></tr>");
+        rows.push('<tr><th>取引に<br>かかるコスト</th><td><b class="zk-yen">' + costOf(k) + "</b><small>約15万円分の取引で</small>" + costNote(k) + "</td></tr>");
         if (pk) rows.push('<tr><th>もらえる特典</th><td><b class="zk-yen">' + pk.amount + "</b><small>キャッシュバック</small><small>条件：" + plain(pk.cond).replace(/（要エントリー）/, "").replace(/口座開設のみ。?/, "口座開設のみ。") + "</small></td></tr>");
         if (mp["取引開始"]) rows.push("<tr><th>取引開始</th><td>" + mp["取引開始"] + "</td></tr>");
       }
@@ -237,7 +240,7 @@
         return '<tr' + (i ? "" : ' class="no1"') + '><th><span class="zk-rank r' + Math.min(i + 1, 4) + '">' + (i + 1) + '位</span><img src="' + logo(k) + '" alt="' + name(k) + '"><em>' + why[k] + '</em>' +
           '<a class="zk-cmp-btn' + (i ? "" : " main") + '" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="cmp_top">' + (i ? "公式サイト" : "無料で口座開設") + '<i aria-hidden="true">›</i></a></th>' +
           "<td><b class=\"zk-yen\">" + needOf(k).main + "</b><small>" + needOf(k).sub + "</small></td>" +
-          "<td><b class=\"zk-yen\">" + costOf(k) + "</b><small>1,000通貨</small>" + costNote(k) + "</td>" +
+          "<td><b class=\"zk-yen\">" + costOf(k) + "</b><small>約15万円分の取引で</small>" + costNote(k) + "</td>" +
           "<td>" + perkS(k) + "</td></tr>";
       }).join("");
       /* かんたん診断（value-advisers参考：1問ずつ表示→おすすめ1社） */
@@ -262,6 +265,7 @@
       /* 冒頭：悩み → 見るのは3つだけ → 知っておくと安心な言葉5つ → ランキング（2026-10-19） */
       var tmSec = document.getElementById("terms"), byl = document.getElementById("zk-byline");
       if (tmSec && byl) byl.after(tmSec);
+      var mnS2 = document.getElementById("zk-money"); if (tmSec && mnS2) tmSec.after(mnS2);
       /* 1位のカード：条件は金額のすぐ下へ。2・3位のカードはやめ、比較表で見せる */
       var pick = document.querySelector("#top3 .r2-pick");
       if (pick) {
