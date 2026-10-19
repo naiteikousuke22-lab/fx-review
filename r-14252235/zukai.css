@@ -601,3 +601,20 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
   .r2 .r2-pick-body figure.r2-banner, .r2-pick figure.r2-banner { max-width: 560px !important; }
   #sticky.sticky-cta { width: min(760px, calc(100vw - 20px)) !important; max-width: min(760px, calc(100vw - 20px)) !important; }
 }
+
+/* PC（1100px以上）：幅を広げた分、FVの文字と写真も大きくして中央の空きをなくす（2026-10-19） */
+@media (min-width: 1100px) {
+  .r2 .r2-hero { min-height: 470px !important; padding: 40px 56px 120px !important; }
+  .r2 .r2-copy { max-width: 640px !important; }
+  .r2 .r2-ribbon { font-size: 18px !important; padding: 8px 18px !important; }
+  .r2 .r2-sub { font-size: 21px !important; margin: 14px 0 6px !important; }
+  .r2 .r2-title { font-size: 48px !important; line-height: 1.25 !important; margin-bottom: 18px !important; }
+  .r2 .r2-title span { font-size: 70px !important; }
+  .r2 .r2-badges { gap: 10px !important; max-width: none !important; }
+  .r2 .r2-badges { flex-wrap: nowrap !important; }
+  .r2 .r2-badges li { font-size: 16px !important; white-space: nowrap !important; min-height: 46px !important; padding: 12px 16px 12px 32px !important; }
+  .r2 .r2-badges li::before { left: 13px !important; }
+  .r2 .r2-hero-note { font-size: 13px !important; max-width: none !important; margin-top: 12px !important; }
+  .r2 .r2-photo { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 30%), linear-gradient(to bottom, transparent 0, #000 18%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent 0, #000 30%), linear-gradient(to bottom, transparent 0, #000 18%); mask-composite: intersect; right: 0 !important; bottom: 49px !important; top: auto !important; width: 330px !important; max-width: none !important; height: 380px !important; object-fit: cover !important; object-position: 50% 12% !important; }
+  .r2 .r2-bubble { right: 270px !important; top: 56px !important; left: auto !important; font-size: 17px !important; padding: 12px 18px !important; }
+}
