@@ -450,3 +450,6 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
 .zk-cmp6 td small{font-size:9.5px;letter-spacing:-.02em;word-break:keep-all}
 .zk-lc-cb{display:block;font-size:15px;font-weight:900;color:#E3261B;letter-spacing:.05em;margin-top:-4px}
 .zk-cmp6 .zk-cmp-btn.main{font-size:10px;padding:7px 1px;letter-spacing:-.03em}
+
+/* 2026-10-19 目次8〜14（li.more）も左揃えに */
+.zk-toc li,.zk-toc ol.all li.more{text-align:left !important}

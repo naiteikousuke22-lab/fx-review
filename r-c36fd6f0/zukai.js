@@ -268,9 +268,12 @@
       var sg = document.querySelector("#top3 .r2-sub-grid"); if (sg) sg.remove();
       var more = document.querySelector("#top3 .r2-more");
       if (more) more.outerHTML = cmp + '<nav class="zk-toc"><p class="zk-toc-t">目次</p><ol id="zk-toc-list"></ol></nav>';
-      /* 各社の特徴：1位だけ開いて、2位以下はたたむ */
+      /* 各社の特徴：1〜3位は開いたまま見せ、4位以下はたたむ（2026-10-19） */
+      Array.prototype.slice.call(document.querySelectorAll("#details details.co-fold"), 0, 2).forEach(function (f) {
+        var art = f.querySelector("article.co-block"); if (art) { f.before(art); f.remove(); }
+      });
       var fold1 = document.querySelector("#details details.co-fold");
-      if (fold1) fold1.insertAdjacentHTML("beforebegin", '<p class="zk-fold-h">2位以下の会社<small>タップすると詳しく見られます</small></p>');
+      if (fold1) fold1.insertAdjacentHTML("beforebegin", '<p class="zk-fold-h">4位以下の会社<small>タップすると詳しく見られます</small></p>');
       document.querySelectorAll("#details details.co-fold").forEach(function (f) {
         var k = (f.querySelector("article.co-block") || {}).id; k = k ? k.replace("co-", "") : ""; if (!k || !C[k]) return;
         var p = (C[k].perks || [])[0], sm = f.querySelector("summary small");
