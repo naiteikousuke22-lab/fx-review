@@ -573,3 +573,9 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
 .wrap { position: relative; }
 #zk-arthead { position: absolute !important; top: 0; right: 0; height: 30px; padding: 0 12px !important; background: transparent !important; z-index: 3; }
 #zk-arthead .zk-title { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* 目次は「見るのは3つだけ」と同じ幅に */
+#zk-byline .zk-toc { max-width: none !important; margin: 16px 0 0 !important; }
+/* FV直下・結論・約6円の申込みボタン */
+.zk-fv-cta { padding: 12px 16px 4px; margin: 0 -16px; background: #fff; }
+.zk-mn-lead { margin: 14px 0 6px; text-align: center; font-weight: 900; color: #d0342c; font-size: 15px; }
+#zk-vd-cta { margin: 10px 0 8px; }

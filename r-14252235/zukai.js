@@ -268,6 +268,13 @@
         var amt = pick.querySelector(".r2-perk"), cnd = pick.querySelector(".r2-perk-c");
         if (amt && cnd) { cnd.classList.add("zk-cond"); cnd.textContent = cnd.textContent.replace(/^※/, ""); amt.after(cnd); }
       }
+      /* 申込みボタンを足す：FV直下・結論・約6円の図の後（2026-10-19） */
+      var heroEl = document.getElementById("hero");
+      if (heroEl && !document.getElementById("zk-fv-cta")) heroEl.insertAdjacentHTML("afterend", '<div class="zk-fv-cta" id="zk-fv-cta">' + cta(TOP, "fv") + '<p class="zk-road-under">口座開設・維持は無料｜スマホで最短5分</p></div>');
+      var vdNext = document.querySelector("#verdict .vd-next");
+      if (vdNext && !document.getElementById("zk-vd-cta")) vdNext.insertAdjacentHTML("beforebegin", '<div class="zk-road-cta" id="zk-vd-cta">' + cta(TOP, "verdict") + '</div>');
+      var mnEl = document.getElementById("zk-money");
+      if (mnEl && !document.getElementById("zk-mn-cta")) mnEl.insertAdjacentHTML("beforeend", '<div class="zk-road-cta" id="zk-mn-cta"><p class="zk-mn-lead">＼ 約6円から試せるのは SBI FXトレード ／</p>' + cta(TOP, "money") + '</div>');
       var rdm = document.querySelector("#road .r2-micro");
       if (rdm && !document.getElementById("zk-road-cta")) rdm.insertAdjacentHTML("afterend", '<div class="zk-road-cta" id="zk-road-cta">' + cta("sbifxt", "road") + '<p class="zk-road-under">口座開設・維持は無料｜入力約5分</p></div>');
       var sg = document.querySelector("#top3 .r2-sub-grid"); if (sg) sg.remove();
@@ -292,6 +299,9 @@
         var t = h.innerText.replace(/＼[^／]*／/g, "").replace(/^(申込み|FAQ)\s*/, "").replace(/\s+/g, " ").trim();
         n++; list.insertAdjacentHTML("beforeend", '<li' + (n > 7 ? ' class="more"' : "") + '><a href="#' + sec.id + '">' + t + "</a></li>");
       });
+      /* 目次は冒頭（見るのは3つだけ の直後）に出す（2026-10-19） */
+      var tocNav = list.closest(".zk-toc"), bylEl = document.getElementById("zk-byline");
+      if (tocNav && bylEl) bylEl.appendChild(tocNav);
       if (n > 7) list.insertAdjacentHTML("afterend", '<button type="button" class="zk-toc-more" onclick="this.previousElementSibling.classList.add(\'all\');this.remove()">目次をすべて見る（' + n + '項目）▼</button>');
     }
     var wr = document.getElementById("worry"); if (wr) wr.hidden = true;
