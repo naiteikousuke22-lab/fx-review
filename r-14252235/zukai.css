@@ -657,3 +657,68 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
 .zk-p3-hd img { height: 46px !important; max-width: 70% !important; }
 .zk-p3-sub img { height: 26px !important; width: auto !important; max-width: 90% !important; }
 @media (min-width: 768px) { .zk-p3-hd img { height: 56px !important; } .zk-p3-sub img { height: 34px !important; } }
+
+/* 5社の比較表（◎○△＋値の横並び・2026-10-20） */
+.zk-cmpx-hint { margin: 0 0 6px; text-align: center; font-size: 12px; color: #56655e; font-weight: 700; }
+.zk-cmpx-sc { overflow-x: auto; -webkit-overflow-scrolling: touch; border-top: 0; }
+table.zk-cmpx { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 760px; background: #fff; font-size: 13px; }
+table.zk-cmpx thead th { background: #2b2d33; color: #fff; font-weight: 900; font-size: 12.5px; padding: 10px 4px; text-align: center; line-height: 1.35; white-space: nowrap; }
+table.zk-cmpx thead th:first-child { position: sticky; left: 0; z-index: 2; }
+table.zk-cmpx tbody th { position: sticky; left: 0; z-index: 1; background: #fff; width: 112px; min-width: 112px; padding: 12px 6px; text-align: center; border-bottom: 1px solid #dfe3ea; border-right: 1px solid #dfe3ea; vertical-align: middle; }
+table.zk-cmpx tbody tr.no1 th, table.zk-cmpx tbody tr.no1 td { background: #fffaf0; }
+table.zk-cmpx tbody th img { display: block; height: 24px; width: auto; max-width: 100%; margin: 4px auto 4px; object-fit: contain; }
+table.zk-cmpx tbody th em { display: block; font-style: normal; font-size: 11.5px; font-weight: 700; color: #1d2330; line-height: 1.35; }
+.zk-rb { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; font-weight: 900; font-size: 14px; color: #fff; background: #8a93a3; }
+.zk-rb.q1 { background: #d4a72c; } .zk-rb.q2 { background: #9aa3b2; } .zk-rb.q3 { background: #c98a5a; }
+table.zk-cmpx td { padding: 12px 4px; text-align: center; vertical-align: middle; border-bottom: 1px solid #dfe3ea; line-height: 1.35; word-break: keep-all; }
+table.zk-cmpx td small { display: block; font-size: 10.5px; color: #56655e; margin-top: 2px; }
+.zk-mk { display: block; margin: 0 auto 4px; width: 30px; height: 30px; box-sizing: border-box; border-radius: 50%; position: relative; }
+.zk-mk.s5 { border: 4px solid #e2342b; }
+.zk-mk.s5::after { content: ""; position: absolute; inset: 5px; border: 3px solid #e2342b; border-radius: 50%; }
+.zk-mk.s4 { border: 4px solid #f08a24; }
+.zk-mk.s3, .zk-mk.s2 { border-radius: 0; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-bottom: 26px solid #2f6fd6; }
+.zk-mk.s3::after, .zk-mk.s2::after { content: ""; position: absolute; left: -9px; top: 8px; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 15px solid #fff; }
+.zk-mv { display: block; font-weight: 900; font-size: 14px; color: #1d2330; }
+table.zk-cmpx td.zk-cp { text-align: left; min-width: 200px; padding: 12px 8px; }
+table.zk-cmpx td.zk-cp b { display: block; color: #e2342b; font-weight: 900; font-size: 14px; line-height: 1.4; }
+table.zk-cmpx td.zk-cp small { font-size: 11px; color: #333; }
+.zk-ob { display: inline-block; background: #e2342b; color: #fff !important; font-weight: 900; font-size: 13px; line-height: 1.3; padding: 10px 12px 10px 10px; border-radius: 6px; box-shadow: 0 3px 0 #a8221b; text-decoration: none; position: relative; min-width: 64px; }
+.zk-ob::after { content: "›"; margin-left: 6px; }
+@media (min-width: 768px) {
+  .zk-cmpx-hint { display: none; }
+  table.zk-cmpx { font-size: 14px; }
+  table.zk-cmpx tbody th { width: 150px; }
+  table.zk-cmpx tbody th img { height: 30px; }
+  .zk-mk { width: 36px; height: 36px; } .zk-mk.s5::after { inset: 6px; }
+  .zk-mv { font-size: 15px; }
+}
+@media (min-width: 1100px) { .zk-cmp-wrap { max-width: none !important; } }
+
+table.zk-cmpx td:nth-child(4) { min-width: 132px; }
+table.zk-cmpx td small.zk-cnote { white-space: normal; font-size: 10px; }
+table.zk-cmpx td small.zk-cnote .zk-nw { display: inline; white-space: normal; }
+
+/* あなたに合ったFX会社を探す（2026-10-20） */
+#zk-search .zk-sh { text-align: left; }
+.zk-sq { max-width: 840px; margin: 0 auto; border-top: 2px solid #2b2d33; }
+.zk-sg { border-bottom: 1px solid #dfe3ea; padding: 14px 4px; }
+.zk-sl { margin: 0 0 8px; font-weight: 900; font-size: 15px; color: #1d2330; }
+.zk-so { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.zk-sq label { display: flex; align-items: center; gap: 8px; background: #f5f7fa; border: 1px solid #dfe3ea; border-radius: 8px; padding: 10px 10px; font-size: 14px; font-weight: 700; color: #1d2330; cursor: pointer; line-height: 1.35; }
+.zk-sq label:has(input:checked) { background: #eaf2ff; border-color: #123a6b; }
+.zk-sq input { width: 18px; height: 18px; flex: 0 0 auto; accent-color: #123a6b; margin: 0; }
+.zk-sbtn { display: block; margin: 18px auto 0; width: min(100%, 360px); background: #2b2d33; color: #fff; font: inherit; font-weight: 900; font-size: 17px; border: 0; border-radius: 8px; padding: 15px 0; box-shadow: 0 4px 0 #123a6b; cursor: pointer; }
+.zk-sres { max-width: 840px; margin: 14px auto 0; }
+.zk-sres-h { margin: 0 0 8px; font-weight: 700; text-align: center; }
+.zk-sres-h b { color: #e2342b; font-size: 18px; }
+.zk-sr { display: grid; grid-template-columns: 28px 84px 1fr auto; align-items: center; gap: 8px; border: 1px solid #dfe3ea; border-radius: 10px; padding: 10px; margin: 0 0 8px; background: #fff; }
+.zk-sr img { height: 24px; width: auto; max-width: 84px; object-fit: contain; }
+.zk-sr b { display: block; font-size: 14px; }
+.zk-sr small { display: block; font-size: 12px; color: #56655e; }
+@media (min-width: 768px) {
+  .zk-sg { display: grid; grid-template-columns: 170px 1fr; align-items: center; padding: 18px 8px; }
+  .zk-sl { margin: 0; }
+  .zk-so { grid-template-columns: repeat(4, 1fr); }
+}
+.zk-sr { grid-template-columns: 26px 72px 1fr auto; }
+.zk-sr img { max-width: 72px; }

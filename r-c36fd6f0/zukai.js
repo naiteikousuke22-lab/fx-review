@@ -45,6 +45,28 @@
       cta(top, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p></div>' +
       '<div class="zk-p3-grid">' + r.slice(1).map(sub).join("") + '</div><p class="zk-p3-more"><a href="#zk-cmp">5社をまとめて比べる ›</a></p></div>';
   };
+  var SQ = [
+    ["始めるのに必要なお金", [["約6円から（1通貨）", function (k) { return C[k].spec.unit === "1通貨"; }], ["約6,000円まで", function (k) { return /^(1通貨|1,000通貨)$/.test(C[k].spec.unit || ""); }]]],
+    ["もらえる特典", [["開設だけで特典あり", function (k) { var p = (C[k].perks || [])[0]; return !!p && /口座開設のみ/.test(p.cond); }], ["3,000円以上", function (k) { var p = (C[k].perks || [])[0]; return !!p && parseInt(p.amount.replace(/[^0-9]/g, ""), 10) >= 3000; }]]],
+    ["通貨の種類", [["30種類以上", function (k) { return parseInt(((C[k].spec.pairs || "").match(/[0-9]+/) || ["0"])[0], 10) >= 30; }], ["50種類以上", function (k) { return parseInt(((C[k].spec.pairs || "").match(/[0-9]+/) || ["0"])[0], 10) >= 50; }]]],
+    ["こだわり条件", [["初心者向け", function (k) { return (SC[k] || {}).first >= 5; }], ["取引コストが安い", function (k) { return (SC[k] || {}).cost >= 5; }], ["スマホアプリが使いやすい", function (k) { return (SC[k] || {}).app >= 4; }], ["すぐ取引を始めたい", function (k) { return (SC[k] || {}).speed >= 4; }]]]
+  ];
+  var searchHtml = function () {
+    return '<section class="sec zk" id="zk-search"><h2 class="zk-h zk-sh">あなたに合ったFX会社を探す</h2><p class="zk-lead">気になる条件にチェックを入れて「検索する」を押してください。</p><div class="zk-sq">' +
+      SQ.map(function (g, gi) { return '<div class="zk-sg"><p class="zk-sl">' + g[0] + '</p><div class="zk-so">' + g[1].map(function (o, oi) { return '<label><input type="checkbox" data-g="' + gi + '" data-o="' + oi + '"><span>' + o[0] + '</span></label>'; }).join("") + '</div></div>'; }).join("") +
+      '</div><button type="button" class="zk-sbtn">検索する</button><div class="zk-sres" aria-live="polite"></div></section>';
+  };
+  var runSearch = function (box) {
+    var on = {}; box.querySelectorAll("input:checked").forEach(function (c) { (on[c.dataset.g] = on[c.dataset.g] || []).push(+c.dataset.o); });
+    var hit = A.ranking.filter(function (k) { return C[k] && Object.keys(on).every(function (g) { return on[g].some(function (o) { return SQ[g][1][o][1](k); }); }); });
+    var out = box.querySelector(".zk-sres");
+    out.innerHTML = hit.length ? '<p class="zk-sres-h">条件に合うFX会社：<b>' + hit.length + '社</b></p>' + hit.map(function (k) {
+      var i = A.ranking.indexOf(k), p = (C[k].perks || [])[0];
+      return '<div class="zk-sr"><span class="zk-rb q' + Math.min(i + 1, 4) + '">' + (i + 1) + '</span><img src="' + logo(k) + '" alt="' + name(k) + '"><div><b>' + name(k) + '</b><small>始めるのに' + needOf(k).main + '〜</small>' + (p ? '<small>特典' + p.amount + '</small>' : "") + '</div><a class="zk-ob" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="search">' + (i ? "公式<br>サイト" : "無料<br>口座開設") + '</a></div>';
+    }).join("") : '<p class="zk-sres-h">条件に合うFX会社が見つかりませんでした。条件を減らしてもう一度お試しください。</p>';
+    out.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  };
+  document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(".zk-sbtn"); if (b) runSearch(b.closest("#zk-search")); });
   var perkOn = perk && (!perk.until || perk.until >= today);
   var perkTxt = perkOn ? "口座開設だけで1,000円（" + perk.until.slice(5).replace("-", "/").replace(/^0/, "") + "まで）" : "口座開設・維持は無料";
 
@@ -172,6 +194,7 @@
     var tmS = document.getElementById("terms"), mnS = document.getElementById("zk-money");
     if (tmS && mnS && document.getElementById("zk-byline") && tmS.previousElementSibling && tmS.previousElementSibling.id === "zk-byline") tmS.after(mnS);
     document.querySelectorAll("text.rl-txt").forEach(function (t) { if (t.textContent === "スワップ") t.textContent = "金利"; });
+    var lastS = document.getElementById("last"); if (lastS && !document.getElementById("zk-search")) lastS.insertAdjacentHTML("beforebegin", searchHtml());
     put("#terms", pair);
     put("#apply", merit);
     /* 比較表は1つにする：元の横スクロール表（スワップ列あり）を隠し、5項目の表を #rank の中に出す */
@@ -260,14 +283,28 @@
           "<td><b class=\"zk-yen\">" + costOf(k) + "</b><small>約15万円分の取引で</small>" + costNote(k) + "</td>" +
           "<td>" + perkS(k) + "</td></tr>";
       }).join("");
+      var mk = function (v, t) { var m = mark(v); return '<span class="zk-mk ' + m[1] + '" aria-label="' + m[0] + '"></span><span class="zk-mv">' + t + '</span>'; };
+      var HEAD = { sbifxt: "開設した人はもれなく1,000円キャッシュバック！" };
+      var DET = { sbifxt: "口座開設＋エントリーだけ。取引・入金は不要" };
+      rows6 = A.ranking.map(function (k, i) {
+        var p = (C[k].perks || [])[0], nd = needOf(k), pc = parseInt(((C[k].spec.pairs || "").match(/[0-9]+/) || ["0"])[0], 10);
+        var tot = i === 0 ? [5, "イチ押し"] : i < 3 ? [4, "おすすめ"] : [3, "目的が<br>合えば"];
+        return '<tr' + (i ? "" : ' class="no1"') + '><th><span class="zk-rb q' + Math.min(i + 1, 4) + '">' + (i + 1) + '</span><img src="' + logo(k) + '" alt="' + name(k) + '"><em>' + name(k) + '</em></th>' +
+          '<td>' + mk(tot[0], tot[1]) + '</td>' +
+          '<td>' + mk(SC[k].small, nd.main) + '<small>' + nd.sub + '</small></td>' +
+          '<td>' + mk(SC[k].cost, costOf(k)) + '<small>約15万円分の取引で</small>' + costNote(k) + '</td>' +
+          '<td>' + (pc ? mk(pc >= 40 ? 5 : pc >= 30 ? 4 : 3, pc + "種類") : '<span class="zk-mv" style="font-size:12px">公式で確認</span>') + '</td>' +
+          '<td class="zk-cp">' + (p ? '<b>' + (HEAD[k] || p.amount + "キャッシュバック") + '</b><small>' + (DET[k] || "条件：" + plain(p.cond).replace(/（要エントリー）/, "")) + '</small>' : "—") + '</td>' +
+          '<td><a class="zk-ob" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="cmp_top">' + (i ? "公式<br>サイト" : "無料<br>口座開設") + '</a></td></tr>';
+      }).join("");
       /* かんたん診断（value-advisers参考：1問ずつ表示→おすすめ1社） */
       var quiz = '<div class="zk-quiz" id="zk-quiz"><p class="zk-quiz-t">かんたん3問！あなたに合うFX口座診断</p><p class="zk-quiz-l">3つの質問に答えるだけで、あなたに合うFX口座がわかります。</p>' +
         QZ.map(function (x, i) { return '<div class="zk-qs"' + (i ? " hidden" : "") + ' data-i="' + i + '"><p class="zk-qn">QUESTION ' + (i + 1) + " / " + QZ.length + '</p><p class="zk-qq">' + x.q + "</p>" +
           x.o.map(function (o, j) { return '<button type="button" class="zk-qo" data-j="' + j + '">' + o[0] + "</button>"; }).join("") + (i ? '<button type="button" class="zk-qback">‹ 前の質問へ</button>' : "") + "</div>"; }).join("") +
         '<div class="zk-qres" hidden></div></div>';
       var cmp =
-        '<div class="zk-cmp-wrap" id="zk-cmp"><p class="zk-cmp-h"><span>＼2位以下もまとめて比べる／</span>6社の比較表</p><p class="zk-cmp-cap">おすすめFX口座ランキング（全6社）</p><table class="zk-cmp zk-cmp6"><thead><tr><th>FX会社</th><th>始めるのに<br>必要なお金</th><th>取引の<br>コスト</th><th>もらえる特典</th></tr></thead><tbody>' +
-        rows6 + '</tbody></table><p class="zk-fine">※必要なお金：米ドル/円をいちばん少ない量で取引するときの目安（1ドル＝150円・レバレッジ25倍で計算）。<br>※取引コスト：米ドル/円を1,000通貨（約15万円分）売り買いしたときの、買値と売値の差（スプレッド）。原則固定（例外あり）。SBI FXトレードの米ドル/円0.18銭は※1〜1,000,000通貨の場合の基準値、原則固定は※午前9:00〜翌午前3:00。<br>※特典は各社公式サイトの情報（2026年10月時点）。順位は広告掲載の条件にもとづきます。</p></div>';
+        '<div class="zk-cmp-wrap" id="zk-cmp"><p class="zk-cmp-h"><span>＼2位以下もまとめて比べる／</span>6社の比較表</p><p class="zk-cmp-cap">おすすめFX口座ランキング（全6社）</p><p class="zk-cmpx-hint">← 横にスクロールして比べられます →</p><div class="zk-cmpx-sc"><table class="zk-cmpx"><thead><tr><th>FX会社</th><th>総合</th><th>始めるのに<br>必要なお金</th><th>取引の<br>コスト</th><th>通貨の<br>種類</th><th>口座開設キャンペーン</th><th>公式ページ</th></tr></thead><tbody>' +
+        rows6 + '</tbody></table></div><p class="zk-fine">※必要なお金：米ドル/円をいちばん少ない量で取引するときの目安（1ドル＝150円・レバレッジ25倍で計算）。<br>※取引コスト：米ドル/円を1,000通貨（約15万円分）売り買いしたときの、買値と売値の差（スプレッド）。原則固定（例外あり）。SBI FXトレードの米ドル/円0.18銭は※1〜1,000,000通貨の場合の基準値、原則固定は※午前9:00〜翌午前3:00。<br>※特典は各社公式サイトの情報（2026年10月時点）。順位は広告掲載の条件にもとづきます。</p></div>';
       var guide = '<div class="zk-guide" id="zk-guide"><p class="zk-guide-t"><span>FX口座えらびで</span>見るのは<em>3つだけ</em></p><ol>' +
           '<li><span class="zk-gn">1</span><div><b>始めるのに必要なお金</b><p>少ないほど気軽に試せます。会社によって<mark>約6円〜約6万円</mark>と差があります。</p></div></li>' +
           '<li><span class="zk-gn">2</span><div><b>取引にかかるコスト</b><p>売り買いのたびにかかる手数料のようなお金。<mark>1,000通貨（約15万円分）で約2円</mark>が目安です。</p></div></li>' +
