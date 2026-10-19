@@ -39,31 +39,59 @@
         '<dl><dt>始めるのに必要なお金</dt><dd><b>' + nd.main + '〜</b></dd><dt>もらえる特典</dt><dd><b>' + (p ? p.amount : "—") + '</b>' + (p ? '<small>条件：' + (SH[k] || "取引など") + '</small>' : "") + '</dd></dl>' +
         '<a class="zk-p3-btn" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="pick3">公式サイト ›</a></div>';
     };
-    return '<div class="zk-p3" id="zk-pick3"><div class="zk-p3-top"><p class="zk-p3-lb">＼ 初心者の1社目にイチ押し ／</p>' +
-      '<div class="zk-p3-hd"><span class="zk-p3-no">1位</span><img src="' + logo(top) + '" alt="' + name(top) + '"></div>' +
-      '<div class="zk-p3-st"><div><span>始めるのに必要なお金</span><b>' + n0.main + '〜</b></div><div class="hot"><span>開設した人はもれなく</span><b>' + (p0 ? p0.amount : "") + '</b><small>キャッシュバック（要エントリー）</small></div></div>' +
-      cta(top, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p></div>' +
+    return '<div class="zk-p3" id="zk-pick3"><div class="zk-p3-top"><p class="zk-p3-rib"><span>👑</span>当サイト イチ押し！初心者の1社目はここ</p><div class="zk-p3-in">' +
+      (top === "sbifxt" ? '<p class="zk-p3-or">★ オリコン顧客満足度<sup>®</sup> FX初心者 <b>7年連続 第1位</b>※</p>' : "") +
+      '<div class="zk-p3-hd"><span class="zk-p3-md"><b>1</b>位</span><img src="' + logo(top) + '" alt="' + name(top) + '"></div>' +
+      '<img class="zk-p3-bn" src="img/bn4/' + top + '.jpg" alt="' + name(top) + 'の公式バナー">' +
+      '<div class="zk-p3-st"><div><span>始めるのに必要なお金</span><b>' + n0.main + '<small>〜</small></b><em>掲載6社で最少</em></div><div class="hot"><span><i>もれなく</i>開設した人全員に</span><b>' + (p0 ? p0.amount.replace("円", "<small>円</small>") : "") + '</b><em>キャッシュバック（要エントリー）</em></div></div>' +
+      cta(top, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p>' +
+      (top === "sbifxt" ? '<p class="zk-p3-note">※2020〜2026年 オリコン顧客満足度®調査 FX 初心者 第1位（SBI FXトレード公式サイトより）。バナーは公式サイトより。</p>' : "") + '</div></div>' +
       '<div class="zk-p3-grid">' + r.slice(1).map(sub).join("") + '</div><p class="zk-p3-more"><a href="#zk-cmp">5社をまとめて比べる ›</a></p></div>';
   };
+  var pairsOf = function (k) { return parseInt(((C[k].spec.pairs || "").match(/[0-9]+/) || ["0"])[0], 10); };
+  var perkOf1 = function (k) { return (C[k].perks || [])[0]; };
+  var yenOf = function (p) { return p ? parseInt(p.amount.replace(/[^0-9]/g, ""), 10) : 0; };
   var SQ = [
-    ["始めるのに必要なお金", [["約6円から（1通貨）", function (k) { return C[k].spec.unit === "1通貨"; }], ["約6,000円まで", function (k) { return /^(1通貨|1,000通貨)$/.test(C[k].spec.unit || ""); }]]],
-    ["もらえる特典", [["開設だけで特典あり", function (k) { var p = (C[k].perks || [])[0]; return !!p && /口座開設のみ/.test(p.cond); }], ["3,000円以上", function (k) { var p = (C[k].perks || [])[0]; return !!p && parseInt(p.amount.replace(/[^0-9]/g, ""), 10) >= 3000; }]]],
-    ["通貨の種類", [["30種類以上", function (k) { return parseInt(((C[k].spec.pairs || "").match(/[0-9]+/) || ["0"])[0], 10) >= 30; }], ["50種類以上", function (k) { return parseInt(((C[k].spec.pairs || "").match(/[0-9]+/) || ["0"])[0], 10) >= 50; }]]],
-    ["こだわり条件", [["初心者向け", function (k) { return (SC[k] || {}).first >= 5; }], ["取引コストが安い", function (k) { return (SC[k] || {}).cost >= 5; }], ["スマホアプリが使いやすい", function (k) { return (SC[k] || {}).app >= 4; }], ["すぐ取引を始めたい", function (k) { return (SC[k] || {}).speed >= 4; }]]]
+    ["最初はいくらくらいから始めたいですか？", [
+      ["数百円以内で、まず試してみたい", "数百円から始められる", function (k) { return C[k].spec.unit === "1通貨"; }],
+      ["1万円くらいまでで始めたい", "1万円以内で始められる", function (k) { return /^(1通貨|1,000通貨)$/.test(C[k].spec.unit || ""); }],
+      ["10万円以上でも大丈夫", null, null]]],
+    ["口座開設の特典は、どう受け取りたいですか？", [
+      ["取引しなくても、開設だけでもらいたい", "開設だけで特典がもらえる", function (k) { var p = perkOf1(k); return !!p && /口座開設のみ/.test(p.cond); }],
+      ["取引する予定なので、金額が大きいほうがいい", "特典の金額が大きい", function (k) { return yenOf(perkOf1(k)) >= 3000; }],
+      ["特典にはこだわらない", null, null]]],
+    ["口座選びで、いちばん大事にしたいことは？", [
+      ["はじめてでも迷わないこと", "初心者向けの評価が高い", function (k) { return (SC[k] || {}).first >= 5; }],
+      ["取引のコストが安いこと", "取引コストが安い", function (k) { return (SC[k] || {}).cost >= 5; }],
+      ["スマホアプリの使いやすさ", "スマホアプリが使いやすい", function (k) { return (SC[k] || {}).app >= 4; }],
+      ["今日・明日から取引を始めたい", "最短即日〜翌日で取引できる", function (k) { return (SC[k] || {}).speed >= 4; }]]],
+    ["取引してみたい通貨は？", [
+      ["米ドル/円など、定番の通貨だけでいい", null, null],
+      ["いろいろな国の通貨を試したい", "50種類以上の通貨を取引できる", function (k) { return pairsOf(k) >= 50; }]]]
   ];
   var searchHtml = function () {
-    return '<section class="sec zk" id="zk-search"><h2 class="zk-h zk-sh">あなたに合ったFX会社を探す</h2><p class="zk-lead">気になる条件にチェックを入れて「検索する」を押してください。</p><div class="zk-sq">' +
-      SQ.map(function (g, gi) { return '<div class="zk-sg"><p class="zk-sl">' + g[0] + '</p><div class="zk-so">' + g[1].map(function (o, oi) { return '<label><input type="checkbox" data-g="' + gi + '" data-o="' + oi + '"><span>' + o[0] + '</span></label>'; }).join("") + '</div></div>'; }).join("") +
-      '</div><button type="button" class="zk-sbtn">検索する</button><div class="zk-sres" aria-live="polite"></div></section>';
+    return '<section class="sec zk" id="zk-search"><h2 class="zk-h zk-sh">あなたに合ったFX会社を探す</h2><p class="zk-lead">4つの質問に答えると、条件に合うFX会社がわかります。<br>わからない質問は飛ばしてもOKです。</p><div class="zk-sq">' +
+      SQ.map(function (g, gi) { return '<div class="zk-sg"><p class="zk-sl"><span class="zk-sqn">Q' + (gi + 1) + '</span>' + g[0] + '</p><div class="zk-so">' + g[1].map(function (o, oi) { return '<label><input type="radio" name="zk-sq' + gi + '" data-g="' + gi + '" data-o="' + oi + '"><span>' + o[0] + '</span></label>'; }).join("") + '</div></div>'; }).join("") +
+      '</div><button type="button" class="zk-sbtn">この条件で探す</button><div class="zk-sres" aria-live="polite"></div></section>';
   };
   var runSearch = function (box) {
-    var on = {}; box.querySelectorAll("input:checked").forEach(function (c) { (on[c.dataset.g] = on[c.dataset.g] || []).push(+c.dataset.o); });
-    var hit = A.ranking.filter(function (k) { return C[k] && Object.keys(on).every(function (g) { return on[g].some(function (o) { return SQ[g][1][o][1](k); }); }); });
-    var out = box.querySelector(".zk-sres");
-    out.innerHTML = hit.length ? '<p class="zk-sres-h">条件に合うFX会社：<b>' + hit.length + '社</b></p>' + hit.map(function (k) {
-      var i = A.ranking.indexOf(k), p = (C[k].perks || [])[0];
-      return '<div class="zk-sr"><span class="zk-rb q' + Math.min(i + 1, 4) + '">' + (i + 1) + '</span><img src="' + logo(k) + '" alt="' + name(k) + '"><div><b>' + name(k) + '</b><small>始めるのに' + needOf(k).main + '〜</small>' + (p ? '<small>特典' + p.amount + '</small>' : "") + '</div><a class="zk-ob" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="search">' + (i ? "公式<br>サイト" : "無料<br>口座開設") + '</a></div>';
-    }).join("") : '<p class="zk-sres-h">条件に合うFX会社が見つかりませんでした。条件を減らしてもう一度お試しください。</p>';
+    var picks = [].map.call(box.querySelectorAll("input:checked"), function (c) { return SQ[+c.dataset.g][1][+c.dataset.o]; }).filter(function (o) { return o[2]; });
+    var list = A.ranking.filter(function (k) { return C[k]; }).map(function (k, i) {
+      var ok = picks.filter(function (o) { return o[2](k); }).map(function (o) { return o[1]; });
+      return { k: k, i: i, ok: ok };
+    }).sort(function (a, b) { return b.ok.length - a.ok.length || a.i - b.i; });
+    var out = box.querySelector(".zk-sres"), top = list[0];
+    var row = function (r, big) {
+      var p = perkOf1(r.k);
+      return '<div class="zk-sr' + (big ? " big" : "") + '"><span class="zk-rb q' + Math.min(r.i + 1, 4) + '">' + (r.i + 1) + '</span><img src="' + logo(r.k) + '" alt="' + name(r.k) + '"><div><b>' + name(r.k) + '</b>' +
+        (picks.length ? '<small class="zk-sok">合う条件 ' + r.ok.length + ' / ' + picks.length + '</small>' : "") +
+        '<small>始めるのに' + needOf(r.k).main + '〜</small>' + (p ? '<small>特典' + p.amount + '</small>' : "") + '</div>' +
+        '<a class="zk-ob" href="' + url(r.k) + '" rel="sponsored noopener" target="_blank" data-aff="' + r.k + '" data-place="search">' + (r.i ? "公式<br>サイト" : "無料<br>口座開設") + '</a></div>' +
+        (big && r.ok.length ? '<ul class="zk-swhy">' + r.ok.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" : "");
+    };
+    out.innerHTML = '<p class="zk-sres-h">あなたにいちばん合うのは</p>' + row(top, true) +
+      '<p class="zk-sres-s">ほかの候補</p>' + list.slice(1, 3).map(function (r) { return row(r, false); }).join("") +
+      '<p class="zk-sres-n">※当サイトの評価と各社公式サイトの情報（2026年10月時点）をもとに表示しています。</p>';
     out.scrollIntoView({ block: "nearest", behavior: "smooth" });
   };
   document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(".zk-sbtn"); if (b) runSearch(b.closest("#zk-search")); });

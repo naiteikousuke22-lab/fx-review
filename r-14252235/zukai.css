@@ -722,3 +722,60 @@ table.zk-cmpx td small.zk-cnote .zk-nw { display: inline; white-space: normal; }
 }
 .zk-sr { grid-template-columns: 26px 72px 1fr auto; }
 .zk-sr img { max-width: 72px; }
+
+/* アンケート形式（2026-10-20） */
+.zk-sq { border-top: 0 !important; }
+.zk-sg { display: block !important; background: #fff; border: 1px solid #dfe3ea !important; border-radius: 12px; padding: 14px 12px !important; margin: 0 0 12px; }
+.zk-sl { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 10px !important; font-size: 16px !important; line-height: 1.45; }
+.zk-sqn { flex: 0 0 auto; background: #123a6b; color: #fff; font-weight: 900; font-size: 13px; border-radius: 6px; padding: 2px 8px; margin-top: 1px; }
+.zk-so { grid-template-columns: 1fr !important; gap: 8px; }
+.zk-sq label { padding: 12px 12px !important; font-size: 15px !important; }
+.zk-sq input[type=radio] { width: 20px; height: 20px; }
+.zk-sr.big { border: 2px solid #e2342b; background: #fffaf0; }
+.zk-sok { color: #e2342b !important; font-weight: 900; }
+.zk-swhy { margin: -2px 0 12px; padding: 10px 12px 10px 30px; background: #fff5f4; border-radius: 0 0 10px 10px; font-size: 13px; font-weight: 700; }
+.zk-swhy li { margin: 2px 0; }
+.zk-swhy li::marker { content: "✓ "; color: #e2342b; }
+.zk-sres-s { margin: 14px 0 6px; font-weight: 900; font-size: 14px; color: #44505f; }
+.zk-sres-n { margin: 8px 0 0; font-size: 11px; color: #56655e; }
+@media (min-width: 768px) {
+  .zk-so { grid-template-columns: repeat(2, 1fr) !important; }
+  .zk-sg { padding: 18px 20px !important; }
+}
+
+/* FV直下の1位カードを強く（2026-10-20） */
+.zk-p3-top { padding: 0 !important; overflow: hidden; border: 3px solid #d0342c !important; box-shadow: 0 10px 24px -12px rgba(208,52,44,.6) !important; }
+.zk-p3-rib { margin: 0; background: linear-gradient(90deg, #c4171d, #e8452c 55%, #c4171d); color: #fff; font-weight: 900; font-size: 16px; text-align: center; padding: 10px 8px; letter-spacing: .02em; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.zk-p3-rib span { margin-right: 6px; }
+.zk-p3-in { padding: 12px 12px 10px; background: linear-gradient(180deg, #fffaf0, #fff 40%); }
+.zk-p3-or { margin: 0 0 10px; text-align: center; background: linear-gradient(90deg, #f7e7b4, #fff6d8, #f7e7b4); border: 1px solid #e3c873; border-radius: 999px; padding: 6px 10px; font-size: 13px; font-weight: 900; color: #5a4300; }
+.zk-p3-or b { color: #c4171d; }
+.zk-p3-or sup { font-size: 9px; }
+.zk-p3-hd { margin: 0 0 10px !important; }
+.zk-p3-md { flex: 0 0 auto; width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff3b0, #e0b33a 55%, #a87b12); color: #5a3d00; display: flex; align-items: baseline; justify-content: center; padding-top: 10px; box-sizing: border-box; font-weight: 900; font-size: 14px; box-shadow: 0 3px 0 #8a6510, inset 0 0 0 3px rgba(255,255,255,.55); }
+.zk-p3-md b { font-size: 26px; line-height: 1; margin-right: 1px; }
+.zk-p3-bn { display: block; width: 100%; max-width: 380px; margin: 0 auto 12px; border-radius: 8px; box-shadow: 0 4px 12px -6px rgba(0,0,0,.35); }
+.zk-p3-st > div { border: 2px solid #c9d6ea; background: linear-gradient(180deg, #f4f8ff, #e8f0fc) !important; padding: 10px 6px !important; }
+.zk-p3-st > div.hot { border-color: #f1a39c; background: linear-gradient(180deg, #fff6f4, #ffe6e2) !important; }
+.zk-p3-st b { font-size: 34px !important; letter-spacing: -.01em; }
+.zk-p3-st b small { font-size: 18px; }
+.zk-p3-st .hot b { font-size: 40px !important; background: linear-gradient(transparent 68%, #ffe14d 68%); padding: 0 4px; }
+.zk-p3-st em { font-style: normal; font-size: 11px; font-weight: 700; color: #44505f; line-height: 1.35; margin-top: 2px; }
+.zk-p3-st span i { font-style: normal; display: inline-block; background: #d0342c; color: #fff; font-size: 11px; border-radius: 4px; padding: 1px 6px; margin-right: 4px; }
+.zk-p3-note { margin: 6px 0 0; font-size: 10.5px; color: #6b7480; line-height: 1.5; }
+@media (min-width: 768px) {
+  .zk-p3-rib { font-size: 20px; padding: 12px; }
+  .zk-p3-in { padding: 18px 24px 14px; }
+  .zk-p3-or { font-size: 15px; max-width: 520px; margin: 0 auto 12px; }
+  .zk-p3-md { width: 64px; height: 64px; } .zk-p3-md b { font-size: 30px; }
+  .zk-p3-bn { max-width: 440px; }
+  .zk-p3-st b { font-size: 44px !important; } .zk-p3-st .hot b { font-size: 52px !important; }
+  .zk-p3-st span { font-size: 14px !important; } .zk-p3-st em { font-size: 13px; }
+}
+.zk-p3-st b { white-space: nowrap; display: inline-block; align-self: center; }
+@media (max-width: 767px) {
+  .zk-p3-st b { font-size: 30px !important; }
+  .zk-p3-st .hot b { font-size: 34px !important; }
+  .zk-p3-st b small { font-size: 15px; }
+  .zk-p3-st span { font-size: 11.5px !important; }
+}
