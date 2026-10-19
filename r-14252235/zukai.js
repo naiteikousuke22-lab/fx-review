@@ -259,6 +259,9 @@
           '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>少ないお金から、損を小さく始められる口座が知りたい！</p></div>' +
           guide +
         '</div>');
+      /* 冒頭：悩み → 見るのは3つだけ → 知っておくと安心な言葉5つ → ランキング（2026-10-19） */
+      var tmSec = document.getElementById("terms"), byl = document.getElementById("zk-byline");
+      if (tmSec && byl) byl.after(tmSec);
       /* 1位のカード：条件は金額のすぐ下へ。2・3位のカードはやめ、比較表で見せる */
       var pick = document.querySelector("#top3 .r2-pick");
       if (pick) {
