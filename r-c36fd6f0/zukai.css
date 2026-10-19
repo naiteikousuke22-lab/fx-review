@@ -451,5 +451,51 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
 .zk-lc-cb{display:block;font-size:15px;font-weight:900;color:#E3261B;letter-spacing:.05em;margin-top:-4px}
 .zk-cmp6 .zk-cmp-btn.main{font-size:10px;padding:7px 1px;letter-spacing:-.03em}
 
+
 /* 2026-10-19 目次8〜14（li.more）も左揃えに */
 .zk-toc li,.zk-toc ol.all li.more{text-align:left !important}
+
+/* 2026-10-19 「5つの項目で比べると」の表を大きく */
+#zk-score .zk-lead{font-size:15px}
+#zk-score .zk-tbl-wrap{max-width:760px}
+#zk-score .zk-tbl{font-size:15px}
+#zk-score .zk-tbl th,#zk-score .zk-tbl td{padding:12px 4px}
+#zk-score .zk-tbl thead th{font-size:13px}
+#zk-score .zk-tbl tbody th{font-size:14.5px;padding-left:12px}
+#zk-score .zk-tbl .zk-s{font-size:22px;line-height:1}
+#zk-score .zk-tbl .zk-cnt{font-size:18px;font-weight:800}
+#zk-score .zk-legend{font-size:14px}
+#zk-score .zk-legend .zk-s{font-size:16px !important}
+@media (min-width:768px){
+  #zk-score .zk-tbl{font-size:16px}
+  #zk-score .zk-tbl th,#zk-score .zk-tbl td{padding:16px 6px}
+  #zk-score .zk-tbl thead th{font-size:15px}
+  #zk-score .zk-tbl tbody th{font-size:17px;padding-left:16px}
+  #zk-score .zk-tbl .zk-s{font-size:28px}
+  #zk-score .zk-tbl .zk-cnt{font-size:22px}
+}
+@media (max-width:767px){
+  #zk-score .zk-tbl th,#zk-score .zk-tbl td{padding:12px 2px}
+  #zk-score .zk-tbl thead th{font-size:12px}
+  #zk-score .zk-tbl tbody th{font-size:13.5px;padding-left:8px}
+  #zk-score .zk-tbl .zk-s{font-size:20px}
+}
+
+/* 2026-10-19 3問診断を大きく目立たせる */
+.zk-quiz{position:relative;max-width:680px;margin:34px auto 26px;padding:0 0 18px;background:linear-gradient(180deg,#fff8ec 0%,#fff 60%);border:3px solid #F29A2E;border-radius:18px;box-shadow:0 12px 30px -14px rgba(209,119,18,.55);overflow:visible}
+.zk-quiz::before{content:"無料・30秒でわかる";position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:#e23b3b;color:#fff;font-weight:900;font-size:13px;letter-spacing:.06em;padding:5px 16px;border-radius:999px;white-space:nowrap;box-shadow:0 3px 0 #a92525}
+.zk-quiz-t{margin:0;padding:26px 14px 14px;background:linear-gradient(135deg,#123a6b,#1d4f91);color:#fff;border-radius:14px 14px 0 0;font-size:23px;line-height:1.35}
+.zk-quiz-t::before{content:"✅ ";}
+.zk-quiz-l{margin:12px 14px 14px;font-size:15px;font-weight:700;color:#1d2330}
+.zk-quiz .zk-qs,.zk-quiz .zk-qres{margin:0 14px;border:2px solid #f5c58a;box-shadow:0 6px 18px -10px rgba(209,119,18,.5)}
+.zk-quiz .zk-qn{font-size:13px;color:#d17712}
+.zk-quiz .zk-qq{font-size:19px}
+.zk-quiz .zk-qo{padding:16px 16px;font-size:17px;border:2px solid #cfd8e3;box-shadow:0 2px 0 #cfd8e3}
+.zk-quiz .zk-qo::after{color:#F29A2E;font-size:22px;font-weight:900}
+.zk-quiz .zk-qo:hover,.zk-quiz .zk-qo:active{border-color:#F29A2E;background:#fff4e5}
+@media (min-width:768px){.zk-quiz-t{font-size:28px}.zk-quiz .zk-qq{font-size:21px}}
+.zk-quiz{overflow:hidden}
+.zk-quiz::before{top:12px;z-index:1}
+.zk-quiz-t{padding-top:46px}
+.zk-quiz-t{white-space:normal;overflow-wrap:anywhere}
+@media (max-width:767px){.zk-quiz-t{font-size:21px;padding-left:12px;padding-right:12px}}

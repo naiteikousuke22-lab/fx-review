@@ -7,7 +7,7 @@
   var A = P.article, C = P.companies, SC = A.diagnosis.scores;
   var logo = function (k) { return A.logos[k]; };
   var name = function (k) { return C[k].short || C[k].name; };
-  var url = function (k) { return A.official[k]; };
+  var url = function (k) { return (C[k].aff && C[k].aff.url) || A.official[k]; };
   var cta = function (k, place) {
     return '<a class="r2-btn pulse shine two" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="' + place + '">' +
       '<span class="b-1">' + name(k) + 'で</span><span class="b-2">無料口座開設する</span><span class="arrow" aria-hidden="true">→</span></a>';
