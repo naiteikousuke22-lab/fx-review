@@ -589,3 +589,15 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
   #zk-money { padding-bottom: 72px; }
   .zk-mn-lead { margin-top: 28px; font-size: 16px; }
 }
+
+/* PC（1100px以上）：左右の余白が大きすぎるので、本文の幅を720→1000pxに広げる（2026-10-19） */
+@media (min-width: 1100px) {
+  .wrap { max-width: 1000px !important; }
+  .zk-money, .zk-qty, .zk-pairs, .zk-first, .wr-chat, .wr-next, .zk-fv-cta, .zk-road-cta, .zk-last-btn { max-width: 760px !important; }
+  .zk-cmp-wrap, .zk-know, nav.zk-toc, .zk-camp, .zk-quiz, .zk-tabs, .zk-mc { max-width: 840px !important; }
+  #zk-score .zk-tbl-wrap { max-width: 900px !important; }
+  .zk-concl, .zk-cta { max-width: 640px !important; }
+  .zk-ill { max-width: 640px !important; }
+  .r2 .r2-pick-body figure.r2-banner, .r2-pick figure.r2-banner { max-width: 560px !important; }
+  #sticky.sticky-cta { width: min(760px, calc(100vw - 20px)) !important; max-width: min(760px, calc(100vw - 20px)) !important; }
+}
