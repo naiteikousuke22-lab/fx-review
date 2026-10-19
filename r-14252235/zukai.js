@@ -26,7 +26,7 @@
   };
   var plain = function (t) { return (t || "").replace(/1,000Lot（1,000万通貨）/g, "1,000万通貨").replace(/0\.1Lot/g, "1,000通貨"); };
   var costOf = function (k) { var v = parseFloat(C[k].spec.usd); return isNaN(v) ? "—" : "約" + (Math.round(v * 100) / 10).toString() + "円"; };
-  var costNote = function (k) { var n = C[k].spec.usdNote || ""; return /^※/.test(n) ? '<small class="zk-cnote">米ドル/円' + C[k].spec.usd + "銭" + n + "</small>" : ""; };
+  var costNote = function (k) { var n = C[k].spec.usdNote || ""; return /^※/.test(n) ? '<small class="zk-cnote" data-nowbr>米ドル/円<span class="zk-nw">' + C[k].spec.usd + "銭</span><span class=\"zk-nw\">" + n.replace("※1〜", "※1〜</span><span class=\"zk-nw\">").replace(/通貨の場合の基準値$/, "</span>通貨の場合の<span class=\"zk-nw\">基準値") + "</span></small>" : ""; };
   var today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
   var perkOn = perk && (!perk.until || perk.until >= today);
   var perkTxt = perkOn ? "口座開設だけで1,000円（" + perk.until.slice(5).replace("-", "/").replace(/^0/, "") + "まで）" : "口座開設・維持は無料";
@@ -268,6 +268,8 @@
         var amt = pick.querySelector(".r2-perk"), cnd = pick.querySelector(".r2-perk-c");
         if (amt && cnd) { cnd.classList.add("zk-cond"); cnd.textContent = cnd.textContent.replace(/^※/, ""); amt.after(cnd); }
       }
+      var rdm = document.querySelector("#road .r2-micro");
+      if (rdm && !document.getElementById("zk-road-cta")) rdm.insertAdjacentHTML("afterend", '<div class="zk-road-cta" id="zk-road-cta">' + cta("sbifxt", "road") + '<p class="zk-road-under">口座開設・維持は無料｜入力約5分</p></div>');
       var sg = document.querySelector("#top3 .r2-sub-grid"); if (sg) sg.remove();
       var more = document.querySelector("#top3 .r2-more");
       if (more) more.outerHTML = cmp + '<nav class="zk-toc"><p class="zk-toc-t">目次</p><ol id="zk-toc-list"></ol></nav>';
@@ -320,3 +322,71 @@
 })();
 
 (function(){var s=document.createElement("style");s.textContent=".zk-cnote{display:block;font-size:10px;line-height:1.35;color:#56655E;margin-top:2px}";document.head.appendChild(s);})();
+
+/* 2026-10-19 日本語の改行を文節で：ひらがな→漢字/カタカナ等の境目と句読点の後に改行候補を入れ、単語の途中では折り返さない */
+(function () {
+  var SKIP = { SCRIPT: 1, STYLE: 1, TEXTAREA: 1, svg: 1 };
+  var re = /([ぁ-ゖ]*[ぁ-ぉか-こさ-ゖ](?=[^ぁ-ゖー、。！？」）・／＋→\s])|[、。！？」）・／＋→]+(?=[^、。！？」）])|[^（「\s](?=[（「]))/g;
+  function walk(root) {
+    var tw = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), list = [], n;
+    while ((n = tw.nextNode())) {
+      var p = n.parentNode;
+      if (!p || SKIP[p.nodeName] || p.closest("[data-nowbr]") || n.textContent.length < 2 || n.__wbr) continue;
+      list.push(n);
+    }
+    list.forEach(function (t) {
+      /* 要素の直後の句読点は前の文字にくっつける（行頭に「。」が来ないように） */
+      if (/^[、。！？）」]/.test(t.textContent) && t.previousSibling) t.textContent = "\u2060" + t.textContent;
+      var parts = t.textContent.replace(re, function (m) { return m + "\u0000"; }).split("\u0000");
+      /* 要素の境目：ひらがな・句読点で終わるテキストの後ろにも改行候補 */
+      var nx = t.nextSibling || t.parentNode.nextSibling, nc = nx ? (nx.textContent || "").charAt(0) : "";
+      if (/[ぁ-ぉか-こさ-ゖ、。！？）」]$/.test(t.textContent) && nc && !/[、。！？）」・／＋→ぁ-ゖー]/.test(nc)) parts.push("");
+      if (parts.length < 2) { t.__wbr = 1; return; }
+      var f = document.createDocumentFragment();
+      parts.forEach(function (s, i) { if (i) f.appendChild(document.createElement("wbr")); var x = document.createTextNode(s); x.__wbr = 1; f.appendChild(x); });
+      t.parentNode.replaceChild(f, t);
+    });
+  }
+  var app = document.getElementById("app"); if (!app) return;
+  var st = document.createElement("style");
+  st.textContent = "#app{word-break:keep-all;overflow-wrap:anywhere;line-break:strict}#app table td,#app table th,#app table td *,#app table th *{word-break:keep-all!important;overflow-wrap:break-word}#app table.reg td,#app table.reg th{overflow-wrap:anywhere}";
+  document.head.appendChild(st);
+  var busy = false;
+  function go() { if (busy) return; busy = true; walk(app); busy = false; }
+  go(); setTimeout(go, 300); setTimeout(go, 1200);
+  new MutationObserver(function () { if (!busy) { clearTimeout(go.t); go.t = setTimeout(go, 50); } }).observe(app, { childList: true, subtree: true });
+})();
+
+/* 2026-10-19 読みやすさ：スマホで本文15px・表13px・注釈12px を下限に引き上げ */
+(function () {
+  var app = document.getElementById("app"); if (!app) return;
+  var FINE = /(fine|note|cap|under|legend|zk-fine|zk-cnote|src|small|ep-fine|perk-line|micro|meta|byline|pr\b)/i;
+  function floorOf(e) {
+    /* 短いラベル・ボタン・狭い比較表は元の大きさのまま（文章だけ大きくする） */
+    if ((e.textContent || "").replace(/\s/g, "").length < 15) return 0;
+    if (e.closest(".zk-cmp, .zk-cmp-wrap, [class*=step] [class*=no], .ap-no, .rd-no, svg")) return 0;
+    if (e.closest("table")) return e.closest("small, .zk-cnote, .fine") || e.tagName === "SMALL" ? 12 : 13;
+    if (e.tagName === "SMALL" || FINE.test(e.className || "") || e.closest(".fine, .zk-fine, small, figcaption")) return 12;
+    if (e.closest("button, .r2-btn, .btn, [class*=badge], [class*=tag], .mk, .zk-s, .crown, .zk-rank, .rd-no, .num")) return 0;
+    if (e.closest(".swipe-slide, .rf-card, .zk-cmp, .zk-cc")) return 13;   // 横並び・狭い枠は13px
+    return 15;
+  }
+  var busy = false;
+  function run() {
+    if (busy || innerWidth > 767) return; busy = true;
+    var tw = document.createTreeWalker(app, NodeFilter.SHOW_TEXT, null), seen = new Set(), n;
+    while ((n = tw.nextNode())) {
+      var e = n.parentElement; if (!e || seen.has(e) || !n.data.trim()) continue; seen.add(e);
+      if (e.dataset.ff) continue;
+      var fs = parseFloat(getComputedStyle(e).fontSize), f = floorOf(e);
+      if (f && fs < f) {
+        e.style.setProperty("font-size", f + "px", "important");
+        if (f >= 15) e.style.setProperty("line-height", "1.75", "important");
+      }
+      e.dataset.ff = "1";
+    }
+    busy = false;
+  }
+  run(); setTimeout(run, 400); setTimeout(run, 1300);
+  new MutationObserver(function () { if (!busy) { clearTimeout(run.t); run.t = setTimeout(run, 80); } }).observe(app, { childList: true, subtree: true });
+})();

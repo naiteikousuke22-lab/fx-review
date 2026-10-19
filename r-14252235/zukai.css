@@ -499,3 +499,60 @@ article.co-block > .co-sum p:not(.sum-t){font-family:"Zen Kaku Gothic New",sans-
 .zk-quiz-t{padding-top:46px}
 .zk-quiz-t{white-space:normal;overflow-wrap:anywhere}
 @media (max-width:767px){.zk-quiz-t{font-size:21px;padding-left:12px;padding-right:12px}}
+
+/* 2026-10-19 中央揃えの本文を左揃えに（読みやすさ） */
+.road > li, .road .rd-body, .rd-t, .rd-d, .perk-line, #last .fine, #zk-money .zk-fine, .zk-guide-c { text-align: left !important; }
+@media (max-width: 767px) {
+  .r2-lead, .zk-lead, .sec-lead, .vd-lead, .zk-quiz-l { text-align: left !important; }
+}
+
+/* 2026-10-19 簡単3ステップ：タイムライン型のカードに */
+#road .road { gap: 16px !important; counter-reset: rd; }
+#road .road > li { position: relative; grid-template-columns: 52px 1fr !important; gap: 12px !important; padding: 16px 14px 16px 12px !important; border: 0 !important; border-left: 6px solid var(--r2-brand) !important; border-radius: 14px !important; background: linear-gradient(135deg, #fff 0%, #f4f8fd 100%) !important; box-shadow: 0 6px 18px -10px rgba(18, 58, 107, .45); }
+#road .road > li.is-sure { border-left-color: var(--r2-cta-2) !important; background: linear-gradient(135deg, #fff 0%, #effaf2 100%) !important; }
+#road .road > li:not(:last-child)::after { content: ""; position: absolute; left: 35px; bottom: -18px; width: 0; height: 20px; border-left: 3px dotted #9db3cf; }
+#road .rd-no { position: relative; width: 52px !important; height: 52px !important; border-radius: 50%; display: grid; place-items: center; align-content: center; font-size: 22px !important; line-height: 1; padding-top: 8px; box-sizing: border-box; background: linear-gradient(160deg, #2c5a94, #123a6b) !important; box-shadow: 0 3px 0 #0b2547; }
+#road .rd-no::before { content: "STEP"; position: absolute; top: 8px; left: 0; right: 0; text-align: center; font-size: 9px; letter-spacing: .08em; font-weight: 800; opacity: .9; }
+#road li.is-sure .rd-no { background: linear-gradient(160deg, #2fbf5b, #1a9a43) !important; box-shadow: 0 3px 0 #11702f; }
+#road .rd-t { margin: 2px 0 8px !important; padding-bottom: 8px; border-bottom: 2px dashed #d5deea; font-size: 17.5px !important; color: #123a6b; }
+#road li.is-sure .rd-t { color: #127a35; }
+#road .rd-badge { display: table !important; margin: 6px 0 0 !important; font-size: 12px !important; padding: 3px 10px !important; }
+#road .rd-d { font-size: 14.5px !important; line-height: 1.8 !important; color: #2b3443; }
+
+/* 2026-10-19 申込みの前に準備するもの：アイコン付きカードに */
+#apply .ap-prep { border: 0 !important; border-radius: 16px !important; background: #f4f8fd !important; box-shadow: 0 8px 22px -12px rgba(18, 58, 107, .5); }
+#apply .ap-prep-t { position: relative; padding: 12px 12px !important; font-size: 17px !important; background: linear-gradient(135deg, #123a6b, #1d4f91) !important; }
+#apply .ap-prep-t::before { content: "📝 "; }
+#apply .ap-prep ul { padding: 14px !important; gap: 10px !important; grid-template-columns: 1fr; }
+#apply .ap-prep li { display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 10px 40px 10px 10px !important; background: #fff; border: 1.5px solid #d5deea; border-radius: 12px; font-size: 15px !important; line-height: 1.5; }
+#apply .ap-prep li::before { content: "" !important; position: static !important; flex: none; width: 40px !important; height: 40px !important; border-radius: 10px !important; background: #e6eef9 center / 24px no-repeat !important; font-size: 22px !important; }
+#apply .ap-prep li:nth-child(1)::before { content: "🪪" !important; }
+#apply .ap-prep li:nth-child(2)::before { content: "📱" !important; }
+#apply .ap-prep li:nth-child(3)::before { content: "✉️" !important; }
+#apply .ap-prep li:nth-child(4)::before { content: "🏦" !important; }
+#apply .ap-prep li:nth-child(n+5)::before { content: "✅" !important; }
+#apply .ap-prep li::after { content: "✓"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background: var(--r2-cta-2); color: #fff; font-size: 13px; font-weight: 900; display: grid; place-items: center; }
+@media (min-width: 768px) { #apply .ap-prep ul { grid-template-columns: 1fr 1fr; } }
+
+/* 2026-10-19 準備物カード：マーカー入りの文字が割れないよう flex をやめる */
+#apply .ap-prep-t { font-size: 15.5px !important; }
+#apply .ap-prep li { display: block !important; position: relative; padding: 12px 42px 12px 62px !important; min-height: 0 !important; }
+#apply .ap-prep li::before { position: absolute !important; left: 10px !important; top: 50% !important; transform: translateY(-50%); display: grid !important; place-items: center; }
+
+/* 2026-10-19 3ステップ：右にアイコン・SBIボタン */
+#road .rd-body { position: relative; padding-right: 40px; }
+#road .rd-body::after { position: absolute; right: 0; top: 0; font-size: 28px; line-height: 1; }
+#road .road > li:nth-child(1) .rd-body::after { content: "📱"; }
+#road .road > li:nth-child(2) .rd-body::after { content: "🪙"; }
+#road .road > li:nth-child(3) .rd-body::after { content: "📈"; }
+#road .rd-t { border-bottom: 0 !important; padding-bottom: 0 !important; margin-bottom: 4px !important; font-size: 19px !important; }
+#road .rd-d { font-weight: 700; font-size: 15px !important; }
+#road .r2-micro { margin-top: 18px; }
+.zk-road-cta { margin: 6px 0 4px; }
+.zk-road-under { margin: 6px 0 0; text-align: center; font-size: 12px; color: #56655E; }
+
+/* 2026-10-19 文字の見やすさ：数字はひとかたまり・最終行が短くならないよう整える */
+.zk-nw { white-space: nowrap; display: inline-block; }
+.zk-cnote { word-break: normal !important; overflow-wrap: normal !important; }
+#app p, #app li, #app dd, #app td, #app th, #app summary, #app figcaption { text-wrap: pretty; }
+#app h2, #app h3, #app .sec-h, #app .zk-h, #app .zk-quiz-t, #app .lc-title, #app .rd-t { text-wrap: balance; }
