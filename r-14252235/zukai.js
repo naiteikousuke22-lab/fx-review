@@ -364,7 +364,7 @@
   function floorOf(e) {
     /* 短いラベル・ボタン・狭い比較表は元の大きさのまま（文章だけ大きくする） */
     if ((e.textContent || "").replace(/\s/g, "").length < 15) return 0;
-    if (e.closest(".zk-cmp, .zk-cmp-wrap, [class*=step] [class*=no], .ap-no, .rd-no, svg")) return 0;
+    if (e.closest(".r2-head, #zk-arthead, .r2-award-bar, .r2-deadline, .r2-hero, .zk-cmp, .zk-cmp-wrap, [class*=step] [class*=no], .ap-no, .rd-no, svg")) return 0;
     if (e.closest("table")) return e.closest("small, .zk-cnote, .fine") || e.tagName === "SMALL" ? 12 : 13;
     if (e.tagName === "SMALL" || FINE.test(e.className || "") || e.closest(".fine, .zk-fine, small, figcaption")) return 12;
     if (e.closest("button, .r2-btn, .btn, [class*=badge], [class*=tag], .mk, .zk-s, .crown, .zk-rank, .rd-no, .num")) return 0;
