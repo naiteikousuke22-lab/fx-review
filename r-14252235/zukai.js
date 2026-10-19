@@ -252,11 +252,11 @@
           '<li><span class="zk-gn">1</span><div><b>始めるのに必要なお金</b><p>少ないほど気軽に試せます。会社によって<mark>約6円〜約6万円</mark>と差があります。</p></div></li>' +
           '<li><span class="zk-gn">2</span><div><b>取引にかかるコスト</b><p>売り買いのたびにかかる手数料のようなお金。<mark>1,000通貨（約15万円分）で約2円</mark>が目安です。</p></div></li>' +
           '<li><span class="zk-gn">3</span><div><b>もらえる特典</b><p><mark>口座を開くだけでもらえるか</mark>、入金や取引が必要かで、受け取りやすさが変わります。</p></div></li>' +
-        '</ol><p class="zk-guide-c">この3つで、金融庁登録のFX会社5社を比べました。</p></div>';
+        '</ol><p class="zk-guide-c">この3つで掲載5社を比べると、<b>3つとも◎はSBI FXトレードだけ</b>でした。</p></div>';
       hero.insertAdjacentHTML("afterend",
         '<div class="zk-article" id="zk-byline">' +
-          '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>FXの初心者は、どのFX口座を開設したらいいの？</p></div>' +
-          '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>少ないお金から、損を小さく始められる口座が知りたい！</p></div>' +
+          '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>FXを始めたい！でも、どこで口座を作ればいいの？</p></div>' +
+          '<div class="zk-voice"><img src="img/gen/hero_woman.png" alt=""><p>せっかくなら、少額から始められて特典もある所がいい！</p></div>' +
           guide +
         '</div>');
       /* 冒頭：悩み → 見るのは3つだけ → 知っておくと安心な言葉5つ → ランキング（2026-10-19） */
@@ -270,7 +270,7 @@
       }
       /* 申込みボタンを足す：FV直下・結論・約6円の図の後（2026-10-19） */
       var heroEl = document.getElementById("hero");
-      if (heroEl && !document.getElementById("zk-fv-cta")) heroEl.insertAdjacentHTML("afterend", '<div class="zk-fv-cta" id="zk-fv-cta">' + cta(TOP, "fv") + '<p class="zk-road-under">口座開設・維持は無料｜スマホで最短5分</p></div>');
+      if (heroEl && !document.getElementById("zk-fv-cta")) heroEl.insertAdjacentHTML("afterend", '<div class="zk-fv-cta" id="zk-fv-cta">' + cta(TOP, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p></div>');
       var vdNext = document.querySelector("#verdict .vd-next");
       if (vdNext && !document.getElementById("zk-vd-cta")) vdNext.insertAdjacentHTML("beforebegin", '<div class="zk-road-cta" id="zk-vd-cta">' + cta(TOP, "verdict") + '</div>');
       var mnEl = document.getElementById("zk-money");
