@@ -252,7 +252,7 @@
         '<div class="zk-cmp-wrap" id="zk-cmp"><p class="zk-cmp-h"><span>＼2位以下もまとめて比べる／</span>5社の比較表</p><p class="zk-cmp-cap">おすすめFX口座ランキング（全5社）</p><table class="zk-cmp zk-cmp6"><thead><tr><th>FX会社</th><th>始めるのに<br>必要なお金</th><th>取引の<br>コスト</th><th>もらえる特典</th></tr></thead><tbody>' +
         rows6 + '</tbody></table><p class="zk-fine">※必要なお金：米ドル/円をいちばん少ない量で取引するときの目安（1ドル＝150円・レバレッジ25倍で計算）。<br>※取引コスト：米ドル/円を1,000通貨（約15万円分）売り買いしたときの、買値と売値の差（スプレッド）。原則固定（例外あり）。SBI FXトレードの米ドル/円0.18銭は※1〜1,000,000通貨の場合の基準値、原則固定は※午前9:00〜翌午前3:00。<br>※特典は各社公式サイトの情報（2026年10月時点）。順位は広告掲載の条件にもとづきます。</p></div>';
       var guide = '<div class="zk-guide" id="zk-guide"><p class="zk-guide-t"><span>FX口座えらびで</span>見るのは<em>3つだけ</em></p><ol>' +
-          '<li><span class="zk-gn">1</span><div><b>始めるのに必要なお金</b><p>少ないほど気軽に試せます。会社によって<mark>約6円〜約6万円</mark>と差があります。</p></div></li>' +
+          '<li><span class="zk-gn">1</span><div><b>始めるのに必要なお金</b><p>少ないほど気軽に試せます。会社によって<mark>約6円〜約6,000円</mark>と差があります。</p></div></li>' +
           '<li><span class="zk-gn">2</span><div><b>取引にかかるコスト</b><p>売り買いのたびにかかる手数料のようなお金。<mark>1,000通貨（約15万円分）で約2円</mark>が目安です。</p></div></li>' +
           '<li><span class="zk-gn">3</span><div><b>もらえる特典</b><p><mark>口座を開くだけでもらえるか</mark>、入金や取引が必要かで、受け取りやすさが変わります。</p></div></li>' +
         '</ol><p class="zk-guide-c">この3つで掲載5社を比べると、<b>3つとも◎はSBI FXトレードだけ</b>でした。</p></div>';
