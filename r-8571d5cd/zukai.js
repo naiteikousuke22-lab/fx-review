@@ -28,6 +28,23 @@
   var costOf = function (k) { var v = parseFloat(C[k].spec.usd); return isNaN(v) ? "—" : "約" + (Math.round(v * 100) / 10).toString() + "円"; };
   var costNote = function (k) { var n = C[k].spec.usdNote || ""; return /^※/.test(n) ? '<small class="zk-cnote" data-nowbr>米ドル/円<span class="zk-nw">' + C[k].spec.usd + "銭</span><span class=\"zk-nw\">" + n.replace("※1〜", "※1〜</span><span class=\"zk-nw\">").replace(/通貨の場合の基準値$/, "</span>通貨の場合の<span class=\"zk-nw\">基準値") + "</span></small>" : ""; };
   var today = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10);
+  var pick3 = function () {
+    var r = A.ranking.filter(function (k) { return C[k]; }).slice(0, 3), top = r[0];
+    var pk = function (k) { return (C[k].perks || [])[0]; };
+    var SH = { sbifxt: "開設＋エントリーだけ", minfx: "30万円入金＋取引", lightfx: "30万円入金＋取引", hirose: "1万円入金＋取引", jfx: "20万通貨の取引", dmm: "1,000万通貨の取引" };
+    var p0 = pk(top), n0 = needOf(top);
+    var sub = function (k, i) {
+      var p = pk(k), nd = needOf(k);
+      return '<div class="zk-p3-sub"><p class="zk-p3-rk">' + (i + 2) + '位</p><img src="' + logo(k) + '" alt="' + name(k) + '"><p class="zk-p3-nm">' + name(k) + '</p>' +
+        '<dl><dt>始めるのに必要なお金</dt><dd><b>' + nd.main + '〜</b></dd><dt>もらえる特典</dt><dd><b>' + (p ? p.amount : "—") + '</b>' + (p ? '<small>条件：' + (SH[k] || "取引など") + '</small>' : "") + '</dd></dl>' +
+        '<a class="zk-p3-btn" href="' + url(k) + '" rel="sponsored noopener" target="_blank" data-aff="' + k + '" data-place="pick3">公式サイト ›</a></div>';
+    };
+    return '<div class="zk-p3" id="zk-pick3"><div class="zk-p3-top"><p class="zk-p3-lb">＼ 初心者の1社目にイチ押し ／</p>' +
+      '<div class="zk-p3-hd"><span class="zk-p3-no">1位</span><img src="' + logo(top) + '" alt="' + name(top) + '"></div>' +
+      '<div class="zk-p3-st"><div><span>始めるのに必要なお金</span><b>' + n0.main + '〜</b></div><div class="hot"><span>開設した人はもれなく</span><b>' + (p0 ? p0.amount : "") + '</b><small>キャッシュバック（要エントリー）</small></div></div>' +
+      cta(top, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p></div>' +
+      '<div class="zk-p3-grid">' + r.slice(1).map(sub).join("") + '</div><p class="zk-p3-more"><a href="#zk-cmp">5社をまとめて比べる ›</a></p></div>';
+  };
   var perkOn = perk && (!perk.until || perk.until >= today);
   var perkTxt = perkOn ? "口座開設だけで1,000円（" + perk.until.slice(5).replace("-", "/").replace(/^0/, "") + "まで）" : "口座開設・維持は無料";
 
@@ -274,7 +291,7 @@
       }
       /* 申込みボタンを足す：FV直下・結論・約6円の図の後（2026-10-19） */
       var heroEl = document.getElementById("hero");
-      if (heroEl && !document.getElementById("zk-fv-cta")) heroEl.insertAdjacentHTML("afterend", '<div class="zk-fv-cta" id="zk-fv-cta">' + cta(TOP, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p></div>');
+      if (heroEl && !document.getElementById("zk-fv-cta")) heroEl.insertAdjacentHTML("afterend", '<div class="zk-fv-cta" id="zk-fv-cta">' + pick3() + '</div>');
       var vdNext = document.querySelector("#verdict .vd-next");
       if (vdNext && !document.getElementById("zk-vd-cta")) vdNext.insertAdjacentHTML("beforebegin", '<div class="zk-road-cta" id="zk-vd-cta">' + cta(TOP, "verdict") + '</div>');
       var mnEl = document.getElementById("zk-money");
