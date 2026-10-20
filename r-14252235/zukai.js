@@ -43,7 +43,7 @@
       (top === "sbifxt" ? '<p class="zk-p3-or">★ オリコン顧客満足度<sup>®</sup> FX初心者 <b>7年連続 第1位</b>※</p>' : "") +
       '<div class="zk-p3-hd"><span class="zk-p3-md"><b>1</b>位</span><img src="' + logo(top) + '" alt="' + name(top) + '"></div>' +
       '<img class="zk-p3-bn" src="img/bn4/' + top + '.jpg" alt="' + name(top) + 'の公式バナー">' +
-      '<div class="zk-p3-st"><div><span>始めるのに必要なお金</span><b>' + n0.main + '<small>〜</small></b><em>掲載5社で最少</em></div><div class="hot"><span><i>もれなく</i>開設した人全員に</span><b>' + (p0 ? p0.amount.replace("円", "<small>円</small>") : "") + '</b><em>キャッシュバック（要エントリー）</em></div></div>' +
+      '<div class="zk-p3-st"><div><span>始めるのに必要なお金</span><b>' + n0.main + '<small>〜</small></b><em>掲載5社で最少</em></div><div class="hot"><span>開設した人に<i>もれなく</i></span><b>' + (p0 ? p0.amount.replace("円", "<small>円</small>") : "") + '</b><em>キャッシュバック（要エントリー）</em></div></div>' +
       cta(top, "fv") + '<p class="zk-road-under">10/31までの開設で1,000円｜維持費0円・スマホ5分</p>' +
       (top === "sbifxt" ? '<p class="zk-p3-note">※2020〜2026年 オリコン顧客満足度®調査 FX 初心者 第1位（SBI FXトレード公式サイトより）。バナーは公式サイトより。</p>' : "") + '</div></div>' +
       '<div class="zk-p3-grid">' + r.slice(1).map(sub).join("") + '</div><p class="zk-p3-more"><a href="#zk-cmp">5社をまとめて比べる ›</a></p></div>';
@@ -95,6 +95,43 @@
     out.scrollIntoView({ block: "nearest", behavior: "smooth" });
   };
   document.addEventListener("click", function (e) { var b = e.target.closest && e.target.closest(".zk-sbtn"); if (b) runSearch(b.closest("#zk-search")); });
+  var money2 = function () {
+    var ks = A.ranking.filter(function (k) { return C[k]; }), groups = [], byNeed = {};
+    ks.forEach(function (k) { var m = needOf(k).main; if (!byNeed[m]) { byNeed[m] = { need: m, ks: [] }; groups.push(byNeed[m]); } byNeed[m].ks.push(k); });
+    var yen = function (m) { var n = parseInt(m.replace(/[^0-9]/g, ""), 10) || 0; return /万/.test(m) ? n * 10000 : n; };
+    groups.sort(function (a, b) { return yen(a.need) - yen(b.need); });
+    var pic = function (m) { var v = yen(m);
+      if (v < 100) return '<span class="zk-coin c5">5</span><span class="zk-coin c1">1</span><span class="zk-pic-l">5円玉＋1円玉</span>';
+      if (v < 10000) return new Array(Math.round(v / 1000) + 1).join('<span class="zk-bill">千円</span>') + '<span class="zk-pic-l">千円札 ' + Math.round(v / 1000) + '枚</span>';
+      return new Array(Math.round(v / 10000) + 1).join('<span class="zk-bill man">1万円</span>') + '<span class="zk-pic-l">1万円札 ' + Math.round(v / 10000) + '枚</span>'; };
+    var card = function (g, i) {
+      var best = i === 0, nm = g.ks.map(name).join("・");
+      return '<div class="zk-mc2' + (best ? " best" : "") + '">' + (best ? '<p class="zk-mc2-tag">いちばん少ない</p>' : "") +
+        '<p class="zk-mc2-nm">' + (g.ks.length === 1 ? '<img src="' + logo(g.ks[0]) + '" alt="' + nm + '">' : '<b>' + (groups.length === 2 ? "ほかの" : "") + g.ks.length + '社</b><small>' + nm + '</small>') + '</p>' +
+        '<p class="zk-mc2-l">始めるのに必要なお金</p><p class="zk-mc2-v">' + g.need + '<small>〜</small></p>' +
+        '<div class="zk-pic">' + pic(g.need) + '</div></div>';
+    };
+    var lo = groups[0], hi = groups[1];
+    var ratio = hi ? Math.round(yen(hi.need) / Math.max(1, yen(lo.need))) : 0;
+    return '<section class="sec zk" id="zk-money"><p class="zk-eb">比べる前に、まずここ</p><h2 class="zk-h">始めるのに必要なお金</h2>' +
+      '<p class="zk-lead zk-ml">FXは、口座に<mark>預けたお金</mark>の範囲で取引します。<br>いちばん少ない量で始めるときに必要なお金は、会社によってこれだけ違います。</p>' +
+      '<div class="zk-mc2s">' + groups.map(card).join("") + '</div>' +
+      (ratio >= 10 ? '<p class="zk-mratio">' + name(lo.ks[0]) + 'なら、ほかの会社の<b>約' + ratio.toLocaleString() + '分の1</b>のお金から始められます</p>' : "") +
+      '<h3 class="zk-h3">1円動いたら、損益はいくら？</h3>' +
+      '<p class="zk-ml2">たとえば<b>1ドル＝150円が151円</b>になったとき（1円の値動き）、損益はこのくらいです。</p>' +
+      '<div class="zk-pl">' +
+        '<div class="zk-pl-r best"><span class="zk-pl-k">約6円で始めた場合</span><span class="zk-pl-bar"><i style="width:3%"></i></span><b>±1円</b></div>' +
+        '<div class="zk-pl-r"><span class="zk-pl-k">約6,000円で始めた場合</span><span class="zk-pl-bar"><i style="width:100%"></i></span><b>±1,000円</b></div>' +
+      '</div>' +
+      '<p class="zk-pl-msg">少ない量なら、<mark>損も得も小さく</mark>、練習するつもりで始められます。</p>' +
+      '<details class="zk-qtyd"><summary>取引する量ごとの目安を見る</summary>' +
+      '<div class="zk-tbl-wrap"><table class="zk-qty"><thead><tr><th>取引する量</th><th>必要なお金</th><th>1円動いたときの損益</th></tr></thead><tbody>' +
+      [[1, "約150円分", "約6円", "±1円"], [100, "約1.5万円分", "約600円", "±100円"], [1000, "約15万円分", "約6,000円", "±1,000円"], [10000, "約150万円分", "約6万円", "±1万円"]].map(function (r) {
+        return '<tr' + (r[0] < 1000 ? ' class="sbi"' : "") + '><th>' + r[1] + '<small>（' + r[0].toLocaleString() + '通貨）</small></th><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+      }).join("") + '</tbody></table></div><p class="zk-fine">ピンクの行の量で取引できるのは、掲載5社ではSBI FXトレードだけ（1通貨単位）です。</p></details>' +
+      '<p class="zk-fine">※米ドル/円＝150円・レバレッジ25倍で計算した目安。お札・硬貨の絵はイメージです。</p>' +
+      '</section>';
+  };
   var perkOn = perk && (!perk.until || perk.until >= today);
   var perkTxt = perkOn ? "口座開設だけで1,000円（" + perk.until.slice(5).replace("-", "/").replace(/^0/, "") + "まで）" : "口座開設・維持は無料";
 
@@ -218,6 +255,7 @@
   };
   var run = function () {
     if (!document.getElementById("worry")) return false;
+    money = money2();
     put("#can", money);
     var tmS = document.getElementById("terms"), mnS = document.getElementById("zk-money");
     if (tmS && mnS && document.getElementById("zk-byline") && tmS.previousElementSibling && tmS.previousElementSibling.id === "zk-byline") tmS.after(mnS);
@@ -264,7 +302,7 @@
       f.classList.add("zk-panel"); f.innerHTML = '<div class="zk-panel-in"><img src="' + logo(x[0]) + '" alt="' + name(x[0]) + '"><p>' + x[1] + '</p></div>';
     });
     /* 挿絵（Codex画像生成・文字なし） */
-    [["zk-money", "zukai_shogaku"], ["zk-pair", "zukai_pair"], ["zk-merit", "zukai_merit"]].forEach(function (x) {
+    [["zk-pair", "zukai_pair"], ["zk-merit", "zukai_merit"]].forEach(function (x) {
       var s = document.getElementById(x[0]); if (!s || s.querySelector(".zk-ill")) return;
       var h = s.querySelector("h2"); if (h) h.insertAdjacentHTML("afterend", '<img class="zk-ill" src="img/zukai/' + x[1] + '.jpg" alt="" loading="lazy">');
     });

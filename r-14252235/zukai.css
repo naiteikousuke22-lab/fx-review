@@ -779,3 +779,50 @@ table.zk-cmpx td small.zk-cnote .zk-nw { display: inline; white-space: normal; }
   .zk-p3-st b small { font-size: 15px; }
   .zk-p3-st span { font-size: 11.5px !important; }
 }
+
+/* 始めるのに必要なお金（作り直し・2026-10-21） */
+#zk-money .zk-ml { text-align: left; }
+.zk-mc2s { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; max-width: 760px; margin: 12px auto 0; }
+.zk-mc2 { position: relative; background: #fff; border: 2px solid #d6dce5; border-radius: 14px; padding: 16px 10px 12px; text-align: center; display: flex; flex-direction: column; }
+.zk-mc2.best { border-color: #e2342b; background: linear-gradient(180deg, #fff6f4, #fff); box-shadow: 0 6px 16px -10px rgba(226,52,43,.6); }
+.zk-mc2-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); margin: 0; background: #e2342b; color: #fff; font-size: 12px; font-weight: 900; border-radius: 999px; padding: 3px 12px; white-space: nowrap; }
+.zk-mc2-nm { margin: 0 0 6px; min-height: 36px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #44505f; line-height: 1.4; }
+.zk-mc2-nm img { height: 24px; width: auto; max-width: 90%; object-fit: contain; }
+.zk-mc2-l { margin: 0; font-size: 12px; font-weight: 700; color: #56655e; }
+.zk-mc2-v { margin: 0 0 8px; font-size: 30px; font-weight: 900; color: #1d2330; line-height: 1.2; white-space: nowrap; }
+.zk-mc2.best .zk-mc2-v { color: #e2342b; }
+.zk-mc2-v small { font-size: 15px; }
+.zk-pic { margin-top: auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 3px; min-height: 66px; align-content: center; }
+.zk-coin { display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 900; font-size: 13px; }
+.zk-coin.c5 { width: 38px; height: 38px; background: radial-gradient(circle, #fff 0 5px, #d9b44a 6px); color: #7a5a10; box-shadow: inset 0 0 0 2px #b8902a; align-items: flex-end; padding-bottom: 2px; box-sizing: border-box; font-size: 10px; }
+.zk-coin.c1 { width: 30px; height: 30px; background: #e4e7ec; color: #6b7480; box-shadow: inset 0 0 0 2px #b9bfc9; }
+.zk-bill { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 20px; border-radius: 3px; background: linear-gradient(135deg, #cfe3d4, #a9cdb3); border: 1px solid #7fa98a; font-size: 8px; font-weight: 900; color: #2f5b3c; }
+.zk-bill.man { background: linear-gradient(135deg, #e3d9c4, #cdbb95); border-color: #a8956a; color: #5b4a24; }
+.zk-pic-l { flex-basis: 100%; font-size: 11px; color: #56655e; font-weight: 700; margin-top: 2px; }
+.zk-mratio { margin: 14px auto 0; max-width: 760px; text-align: center; background: #fff8d6; border: 1px solid #f0d878; border-radius: 10px; padding: 10px 12px; font-weight: 900; font-size: 15px; line-height: 1.5; }
+.zk-mratio b { color: #e2342b; font-size: 19px; }
+.zk-ml2 { margin: 6px 0 10px; text-align: left; }
+.zk-pl { display: grid; gap: 10px; max-width: 760px; margin: 0 auto; }
+.zk-pl-r { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "k v" "bar bar"; gap: 4px 8px; align-items: center; background: #f5f7fa; border-radius: 10px; padding: 10px 12px; }
+.zk-pl-r.best { background: #fff3f1; }
+.zk-pl-k { grid-area: k; font-size: 14px; font-weight: 700; }
+.zk-pl-r b { grid-area: v; font-size: 20px; font-weight: 900; color: #1d2330; }
+.zk-pl-r.best b { color: #e2342b; }
+.zk-pl-bar { grid-area: bar; height: 12px; background: #e3e7ee; border-radius: 99px; overflow: hidden; }
+.zk-pl-bar i { display: block; height: 100%; min-width: 8px; background: #f0a23a; border-radius: 99px; }
+.zk-pl-r.best .zk-pl-bar i { background: #e2342b; }
+.zk-pl-msg { margin: 10px 0 0; text-align: center; font-weight: 700; }
+.zk-qtyd { margin: 14px auto 0; max-width: 760px; }
+.zk-qtyd summary { cursor: pointer; text-align: center; font-weight: 900; color: #123a6b; border: 2px solid #123a6b; border-radius: 999px; padding: 10px; list-style: none; }
+.zk-qtyd summary::after { content: " ▼"; font-size: 12px; }
+.zk-qtyd[open] summary::after { content: " ▲"; }
+.zk-qtyd .zk-tbl-wrap { margin-top: 10px; }
+.zk-qty th small { display: block; font-size: 10.5px; font-weight: 700; color: #56655e; }
+@media (min-width: 768px) { .zk-mc2-v { font-size: 38px; } .zk-pic { min-height: 80px; } .zk-coin.c5 { width: 46px; height: 46px; } .zk-coin.c1 { width: 36px; height: 36px; } .zk-bill { width: 44px; height: 26px; font-size: 10px; } }
+.zk-mc2-tag { white-space: nowrap !important; font-size: 12px !important; line-height: 1.4 !important; }
+.zk-mc2-v { white-space: nowrap !important; word-break: keep-all !important; }
+.zk-mc2-nm { flex-direction: column; }
+.zk-mc2-nm b { font-size: 16px; color: #1d2330; }
+.zk-mc2-nm small { font-size: 10.5px !important; color: #56655e; line-height: 1.4; }
+@media (max-width: 767px) { .zk-mc2-v { font-size: 26px !important; } .zk-mc2-v small { font-size: 13px; } .zk-mc2 { padding: 18px 8px 12px; } }
+.zk-mc2s { margin-top: 24px !important; row-gap: 22px !important; }
