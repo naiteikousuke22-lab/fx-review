@@ -826,3 +826,17 @@ table.zk-cmpx td small.zk-cnote .zk-nw { display: inline; white-space: normal; }
 .zk-mc2-nm small { font-size: 10.5px !important; color: #56655e; line-height: 1.4; }
 @media (max-width: 767px) { .zk-mc2-v { font-size: 26px !important; } .zk-mc2-v small { font-size: 13px; } .zk-mc2 { padding: 18px 8px 12px; } }
 .zk-mc2s { margin-top: 24px !important; row-gap: 22px !important; }
+
+/* PC FV：余白を詰め、写真を大きく、吹き出しを顔の横へ（2026-10-21） */
+@media (min-width: 1100px) {
+  .r2 .r2-hero { min-height: 0 !important; height: 430px !important; padding: 34px 56px 0 !important; box-sizing: border-box; }
+  .r2 .r2-photo { right: 10px !important; bottom: 49px !important; width: 360px !important; height: 381px !important; object-position: 50% 8% !important; }
+  .r2 .r2-bubble { right: 330px !important; top: 92px !important; font-size: 17px !important; padding: 12px 18px !important; z-index: 2; }
+  .r2 .r2-bubble::after { left: auto !important; right: -12px !important; top: 50% !important; bottom: auto !important; transform: translateY(-50%) !important; border: 8px solid transparent !important; border-left: 12px solid var(--r2-brand) !important; border-right: 0 !important; }
+  .r2 .r2-copy { max-width: 600px !important; }
+  .r2 .r2-title span { font-size: 66px !important; }
+}
+@media (min-width: 1100px) {
+  .r2 .r2-photo { right: 0 !important; }
+  .r2 .r2-bubble { right: 196px !important; top: 96px !important; }
+}
