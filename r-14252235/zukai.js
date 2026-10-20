@@ -117,17 +117,11 @@
       '<p class="zk-lead zk-ml">FXは、口座に<mark>預けたお金</mark>の範囲で取引します。<br>いちばん少ない量で始めるときに必要なお金は、会社によってこれだけ違います。</p>' +
       '<div class="zk-mc2s">' + groups.map(card).join("") + '</div>' +
       (ratio >= 10 ? '<p class="zk-mratio">' + name(lo.ks[0]) + 'なら、ほかの会社の<b>約' + ratio.toLocaleString() + '分の1</b>のお金から始められます</p>' : "") +
-      '<h3 class="zk-h3">1円動いたら、損益はいくら？</h3>' +
-      '<p class="zk-ml2">たとえば<b>1ドル＝150円が151円</b>になったとき（1円の値動き）、損益はこのくらいです。</p>' +
-      '<div class="zk-pl">' +
-        '<div class="zk-pl-r best"><span class="zk-pl-k">約6円で始めた場合</span><span class="zk-pl-bar"><i style="width:3%"></i></span><b>±1円</b></div>' +
-        '<div class="zk-pl-r"><span class="zk-pl-k">約6,000円で始めた場合</span><span class="zk-pl-bar"><i style="width:100%"></i></span><b>±1,000円</b></div>' +
-      '</div>' +
-      '<p class="zk-pl-msg">少ない量なら、<mark>損も得も小さく</mark>、練習するつもりで始められます。</p>' +
+      '<p class="zk-pl-msg">まずは<mark>少ないお金で注文の練習</mark>をして、慣れたら少しずつ増やせます。</p>' +
       '<details class="zk-qtyd"><summary>取引する量ごとの目安を見る</summary>' +
-      '<div class="zk-tbl-wrap"><table class="zk-qty"><thead><tr><th>取引する量</th><th>必要なお金</th><th>1円動いたときの損益</th></tr></thead><tbody>' +
-      [[1, "約150円分", "約6円", "±1円"], [100, "約1.5万円分", "約600円", "±100円"], [1000, "約15万円分", "約6,000円", "±1,000円"], [10000, "約150万円分", "約6万円", "±1万円"]].map(function (r) {
-        return '<tr' + (r[0] < 1000 ? ' class="sbi"' : "") + '><th>' + r[1] + '<small>（' + r[0].toLocaleString() + '通貨）</small></th><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+      '<div class="zk-tbl-wrap"><table class="zk-qty"><thead><tr><th>取引する量</th><th>必要なお金</th></tr></thead><tbody>' +
+      [[1, "約150円分", "約6円"], [100, "約1.5万円分", "約600円"], [1000, "約15万円分", "約6,000円"], [10000, "約150万円分", "約6万円"]].map(function (r) {
+        return '<tr' + (r[0] < 1000 ? ' class="sbi"' : "") + '><th>' + r[1] + '<small>（' + r[0].toLocaleString() + '通貨）</small></th><td>' + r[2] + '</td></tr>';
       }).join("") + '</tbody></table></div><p class="zk-fine">ピンクの行の量で取引できるのは、掲載5社ではSBI FXトレードだけ（1通貨単位）です。</p></details>' +
       '<p class="zk-fine">※米ドル/円＝150円・レバレッジ25倍で計算した目安。お札・硬貨の絵はイメージです。</p>' +
       '</section>';
